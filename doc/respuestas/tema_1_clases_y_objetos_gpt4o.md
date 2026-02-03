@@ -17,33 +17,24 @@ Por favor, escribe en impersonal las respuestas.
 
 ## 1. ¿Cuáles son las cuatro características básicas de la programación orientada a objetos? Describe brevemente cada una.
 
-###
+### **1. Abstracción**
 
-## **1. Abstracción**
+La abstracción consiste en identificar los elementos esenciales de un problema y representarlos mediante distintas clases con atributos y metodos. Se centra en mostrar únicamente la información necesaria, ocultando los detalles que no son relevantes para el uso del objeto. Esto permite tratar de una manera más sencilla con temas complejos.
+***
 
-La abstracción consiste en identificar los elementos esenciales de un problema y representarlos mediante clases que modelan conceptos del mundo real. Se centra en mostrar únicamente la información necesaria, ocultando los detalles internos que no son relevantes para el uso del objeto. En Java, la abstracción se logra definiendo clases con atributos y métodos que representan comportamientos de alto nivel.
+### **2. Encapsulación**
 
-Además, permite que el código sea más claro y manejable, porque todas las operaciones complejas quedan encapsuladas dentro de la clase. Así, quien utiliza un objeto no necesita conocer cómo está implementado internamente, sino solo qué puede hacer.
+La encapsulacón se refiere a agrupar métodos (comportamientos) y estados (datos) dentro de una misma clase. Esto permite ocultar distintas partes del programa empleando los modificadores de acceso como `private`, `protected` o `public`. De esta forma, se evita la manipulación indebida y se reducen los errores.
 
 ***
 
-## **2. Encapsulación**
+### **3. Herencia**
 
-La encapsulación se refiere a agrupar datos (atributos) y comportamientos (métodos) dentro de una misma unidad: la clase. Además, protege la información al controlar qué partes del código pueden acceder o modificar dichos datos mediante modificadores de acceso como `private`, `protected` o `public`. Esto evita manipulación indebida y reduce errores.
-
-Este mecanismo ofrece un mayor control sobre el estado del objeto, pues obliga a interactuar con él a través de métodos bien definidos, como getters y setters. Con ello se garantiza que cualquier cambio en el estado interno siga reglas coherentes con el diseño de la clase.
-
+La herencia permite crear nuevas clases basadas en clases ya existentes, es decir, permite establecer jerarquías entre ellas, reutilizando sus atributos y métodos. De esta forma, se pueden crear jerarquias como un `perro` es un `animal`, siendo estas dos clases distintas que comparten características comunes, facilitando de esta forma la organicación del código y evitando duplicidades. 
+En Java, la herencia se implementa con la palabra clave `extends`.
 ***
 
-## **3. Herencia**
-
-La herencia permite crear nuevas clases basadas en clases existentes, reutilizando sus atributos y métodos. Esto favorece la extensión del comportamiento sin reescribir código, estableciendo relaciones del tipo "es un" (por ejemplo, un `Perro` es un `Animal`). En Java, la herencia se implementa con la palabra clave `extends`.
-
-Gracias a la herencia, es posible construir jerarquías de clases que comparten características comunes, lo que facilita la organización del código y reduce duplicidades. Además, promueve la creación de estructuras más genéricas y flexibles dentro de una aplicación.
-
-***
-
-## **4. Polimorfismo**
+### **4. Polimorfismo**
 
 El polimorfismo permite que un mismo método pueda comportarse de distintas maneras según el objeto que lo invoque. Esto hace posible escribir código más genérico que trabaje con clases relacionadas sin necesidad de conocer cuál será la implementación exacta que se ejecutará en tiempo de ejecución. En Java, el polimorfismo se manifiesta principalmente mediante la sobrescritura de métodos.
 
@@ -53,97 +44,89 @@ Este principio favorece la extensibilidad del software, ya que permite introduci
 
 ## 2. Cita cuatro lenguajes populares que permitan la programación orientada a objetos
 
-### 
+Los lenguajes que permiten la programación orientada a objetos se pueden dividir en dos grupos:
 
-1.  **Java**  
-    Es uno de los lenguajes orientados a objetos más populares y fue diseñado desde el inicio con este paradigma en mente. Su modelo de clases y objetos es muy consistente y se usa de forma intensiva en aplicaciones empresariales, móviles (Android) y sistemas distribuidos.
+### **Dinámicos**
 
-2.  **C++**  
-    Aunque permite programación estructurada, también incorpora un modelo completo de orientación a objetos, incluyendo clases, herencia múltiple, polimorfismo y encapsulación. Su flexibilidad lo hace adecuado para desarrollo de software de alto rendimiento y sistemas.
+Dentro de este grupo se encuentran:
 
-3.  **Python**  
-    Es un lenguaje multiparadigma, pero ofrece un soporte sencillo y potente para la programación orientada a objetos. Permite definir clases de forma muy intuitiva y aprovechar la herencia, la sobrescritura y el polimorfismo sin complejidad adicional.
+*   **Python**: lenguaje multiparadigma, pero ofrece un soporte sencillo y potente para la programación orientada a objetos. Permite definir clases de forma muy intuitiva y aprovechar la herencia, la sobrescritura y el polimorfismo sin complejidad adicional.
 
-4.  **C#**  
-    Diseñado por Microsoft, es un lenguaje fuertemente orientado a objetos y muy similar a Java en su estructura. Se utiliza en desarrollo de aplicaciones de escritorio, servicios web, videojuegos (con Unity) y aplicaciones empresariales.
+*   **Java Script.**
 
+### **Compilados**
+
+Dentro de este grupo, se pueden dividir en dos subgrupos:
+
+#### **Con recolector de basura**
+
+*   **Java**: Es uno de los lenguajes orientados a objetos más populares y fue diseñado desde el inicio con este paradigma en mente. Su modelo de clases y objetos es muy consistente y se usa de forma intensiva en aplicaciones empresariales, móviles (Android) y sistemas distribuidos.
+
+*   **C#**: Diseñado por Microsoft, es un lenguaje fuertemente orientado a objetos y muy similar a Java en su estructura. Se utiliza en desarrollo de aplicaciones de escritorio, servicios web, videojuegos (con Unity) y aplicaciones empresariales.
+
+
+#### **Sin recolector de basura**
+
+*   **C++**:  Aunque permite programación estructurada, también incorpora un modelo completo de orientación a objetos, incluyendo clases, herencia múltiple, polimorfismo y encapsulación. Su flexibilidad lo hace adecuado para desarrollo de software de alto rendimiento y sistemas.
 
 
 
 ## 3. Los paradigmas anteriores a la POO, ¿Qué es la **programación estructurada**? y, todavía mejor, ¿Qué es la **programación modular**?
 
-### 
+### **¿Cómo es el ensamblador?**
 
-## **¿Qué es la programación estructurada?**
+En ensamblador, las instrucciones se siguen línea a línea, es decir, de una forma secuencial. Existen los saltos arbitrarios (`GOTO`) para "saltar" a otra parte del código.
 
-La programación estructurada es un paradigma que organiza el código siguiendo un conjunto limitado de estructuras de control básicas: **secuencia**, **selección** (`if`, `switch`) y **repetición** (`for`, `while`). La idea central es evitar el uso de saltos incontrolados como `goto`, que dificultan la lectura y el mantenimiento del programa. Esto promueve un flujo lógico más claro y predecible, facilitando tanto el análisis como la depuración.
 
-Además, la programación estructurada fomenta dividir un programa en pequeñas tareas que se ejecutan de forma lineal y ordenada. El desarrollo se realiza siguiendo un esquema “de arriba hacia abajo” (top‑down), lo que permite comprender primero la lógica general y luego implementar los detalles. Este enfoque facilita que el programa sea más legible, más fácil de probar y menos propenso a errores que las aproximaciones no estructuradas.
+### **¿Qué es la programación estructurada?**
+
+La programación estructurada es un paradigma que organiza el código utilizando diferentes estructuras de control como: **condicionales** (`if`) o de **repetición** (`for`, `while` o `do while`). Esto evita el uso de saltos arbitrarios (`GOTO`), facilitando el análisis y la depuración del programa.
+
+Además, la programación estructurada fomenta dividir un programa en pequeñas tareas que se ejecutan de forma lineal y ordenada.
+
 
 ***
 
-## **¿Qué es la programación modular?**
+### **¿Qué es la programación modular?**
 
-La programación modular puede considerarse una evolución natural de la programación estructurada, ya que busca dividir un programa en **módulos independientes**, cada uno encargado de una funcionalidad bien definida. Un módulo actúa como una unidad lógica de código, normalmente implementada como un archivo o biblioteca, que ofrece un conjunto de funciones relacionadas entre sí. Esta separación ayuda a organizar programas grandes y a reducir la complejidad global.
-
-Este enfoque permite trabajar de manera más eficiente, ya que cada módulo puede desarrollarse, probarse y mantenerse por separado. También promueve la reutilización: si un módulo resuelve un problema de forma general, puede utilizarse en distintos programas sin reescribirlo. En lenguajes como C, esta modularidad se implementa mediante archivos `.c` y `.h`, lo que permite controlar la visibilidad de funciones y datos. En cierto modo, este concepto anticipa las ideas que más tarde formaliza la orientación a objetos, como encapsulación y separación clara de responsabilidades.
-
-
+La programación modular busca dividir un programa en **módulos independientes**, cada uno encargado de una funcionalidad bien definida. Cada módulo está implementado como una **librería** o **paquete** que ofrece un conjunto de funciones relacionadas entre si, por lo que se pueden reutilizar para implementarlas en otros programas.
 
 
 
 ## 4. ¿Qué tres elementos definen a un objeto en programación orientada a objetos?
 
-### 
+### **1. Identidad**
+
+La identidad es la posición de memoria en la que se encuentra un objeto. Esto es lo que nos permite distinguir a dicho objeto de otros, por lo que, aunque tengan el mismo estado y comportamiento, no se puede considerar que tienen la misma identidad.
 
 ***
 
-## **1. Estado**
+### **2. Estado**
 
 El estado de un objeto está formado por sus **atributos**, es decir, las variables que almacenan la información que caracteriza a ese objeto. Cada objeto posee su propio conjunto de valores para esos atributos, lo que permite diferenciarlo de otros objetos pertenecientes a la misma clase. Por ejemplo, dos objetos de la clase `Coche` pueden tener distintos colores o distintas velocidades, y eso forma parte de su estado individual.
 
-Este concepto resulta clave porque permite que un mismo diseño (la clase) produzca múltiples instancias con datos particulares. El estado evoluciona a lo largo del tiempo en respuesta a operaciones realizadas sobre el objeto, lo que ofrece un modelo más cercano a cómo se comportan las entidades del mundo real.
-
 ***
 
-## **2. Comportamiento**
+### **3. Comportamiento**
 
-El comportamiento de un objeto está definido por sus **métodos**, que especifican las acciones que puede realizar o las operaciones que pueden ejecutarse sobre él. Estos métodos permiten modificar el estado interno o interactuar con otros objetos, proporcionando una interfaz bien definida para usar la instancia sin necesidad de conocer su implementación interna.
-
-Además, el comportamiento establece la lógica asociada a un objeto, determinando cómo responde ante determinadas solicitudes. Gracias a este mecanismo, los objetos pueden colaborar entre sí para resolver problemas complejos, manteniendo al mismo tiempo una estructura organizada y coherente dentro del programa.
-
-***
-
-## **3. Identidad**
-
-La identidad es lo que permite distinguir a cada objeto de todos los demás, incluso si comparten exactamente el mismo estado y el mismo comportamiento. En lenguajes como Java, esta identidad se refleja en que cada objeto reside en una posición de memoria única, de modo que dos objetos diferentes nunca son considerados el mismo aunque tengan atributos idénticos.
-
-Este concepto es esencial para gestionar correctamente referencias, comparaciones y ciclos de vida de las instancias dentro de una aplicación. Sin identidad, no sería posible modelar adecuadamente entidades independientes ni controlar la interacción precisa entre los distintos objetos de un programa.
+El comportamiento de un objeto está definido por sus **métodos** (funciones), que especifican las acciones que puede realizar o las operaciones que pueden ejecutarse sobre él. Estos métodos permiten modificar el estado interno o interactuar con otros objetos.
 
 
 ## 5. ¿Qué es una clase? ¿Es lo mismo que un objeto? ¿Qué es una instancia? ¿Todos los lenguajes orientados a objetos manejan el concepto de clase?
 
-### 
+### **¿Qué es una clase?**
+
+Una clase puede entenderse como un **modelo o plantilla** que describe las características y comportamientos que tendrán los objetos creados a partir de ella durante la ejecución. Define qué **atributos** (estados) existirán y qué **métodos** (comportamientos) estarán disponibles, pero no contiene valores concretos por sí misma. De manera similar a un `struct` avanzado en C, una clase agrupa datos y funciones, pero además incorpora mecanismos de encapsulación, herencia y polimorfismo.
 
 ***
 
-## **¿Qué es una clase?**
+### **¿Es lo mismo una clase que un objeto?**
 
-Una clase puede entenderse como un **modelo o plantilla** que describe las características y comportamientos que tendrán los objetos creados a partir de ella. Define qué atributos existirán y qué métodos estarán disponibles, pero no contiene valores concretos por sí misma. De manera similar a un `struct` avanzado en C, una clase agrupa datos y funciones, pero además incorpora mecanismos de encapsulación, herencia y polimorfismo.
-
-En esencia, la clase actúa como un plano de construcción. No representa un elemento del programa en ejecución por sí sola, sino que sirve para crear entidades reales llamadas objetos. Gracias a este diseño, múltiples objetos pueden generarse a partir de la misma clase, cada uno con su propio estado independiente.
+No, un objeto es una **entidad concreta** creada en memoria a traves de una clase. Por ejemplo: en un `struct Libros`, el objeto seria uno de los libros guardados.
 
 ***
 
-## **¿Es lo mismo una clase que un objeto?**
-
-Una clase **no es** un objeto; son conceptos relacionados pero distintos. La clase es la definición, el diseño, la estructura conceptual. En cambio, un objeto es una **entidad concreta** creada en memoria a partir de esa clase. Mientras la clase existe de forma abstracta, los objetos existen de forma tangible durante la ejecución del programa.
-
-Una forma clásica de visualizar la diferencia es pensar en la clase como el plano de una casa, y el objeto como la casa construida. Puede haber muchas casas distintas construidas con el mismo plano, del mismo modo que puede haber muchos objetos creados a partir de la misma clase.
-
-***
-
-## **¿Qué es una instancia?**
+### **¿Qué es una instancia?**
 
 Una instancia es simplemente un **objeto particular** creado a partir de una clase. Cada instancia tiene sus propios valores para los atributos definidos por la clase, lo que permite que dos instancias iguales conceptualmente sean diferentes en la práctica. Por ejemplo, dos instancias de la clase `Persona` pueden compartir el mismo diseño, pero tener nombres y edades distintos.
 
@@ -151,7 +134,7 @@ El proceso de crear una instancia se conoce como *instanciación*, y es en ese m
 
 ***
 
-## **¿Todos los lenguajes orientados a objetos manejan el concepto de clase?**
+### **¿Todos los lenguajes orientados a objetos manejan el concepto de clase?**
 
 No todos los lenguajes orientados a objetos utilizan el concepto de clase. Muchos lenguajes sí lo hacen, como Java, C++, C# o Swift, porque se basan en un modelo **clásico** de orientación a objetos en el que la clase es el elemento fundamental. Sin embargo, existen lenguajes que implementan orientación a objetos sin clases, sino mediante **prototipos**, como JavaScript.
 
@@ -161,11 +144,8 @@ En los lenguajes orientados a prototipos, los objetos se crean a partir de otros
 
 ## 6. ¿Dónde se almacenan en memoria los objetos? ¿Es igual en todos los lenguajes? ¿Qué es la **recolección de basura**? 
 
-### 
 
-***
-
-## **¿Dónde se almacenan en memoria los objetos?**
+### **¿Dónde se almacenan en memoria los objetos?**
 
 En la mayoría de lenguajes orientados a objetos modernos, los objetos se almacenan en una zona de memoria llamada **heap**. Esta área está destinada a la creación dinámica de datos cuyo tamaño o vida útil no se conoce en tiempo de compilación. En Java, por ejemplo, cada vez que se utiliza la palabra clave `new`, el objeto resultante se coloca en el heap y lo que se maneja en el código es una **referencia** a esa ubicación. Esto permite que los objetos vivan más allá del ámbito de un método, siempre que existan referencias apuntando hacia ellos.
 
@@ -173,7 +153,7 @@ En contraste, en C++ con orientación a objetos, un objeto puede almacenarse tan
 
 ***
 
-## **¿Es igual en todos los lenguajes?**
+### **¿Es igual en todos los lenguajes?**
 
 No, no todos los lenguajes almacenan los objetos de la misma manera. Lenguajes como Java y C# siguen un modelo uniforme donde todas las instancias de clases viven en el heap. Python también coloca sus objetos en el heap, aunque internamente maneja un sistema propio de administración de memoria. C++, por su parte, ofrece flexibilidad total al permitir objetos en el stack, en el heap o incluso en memoria estática, dependiendo de cómo se definan.
 
@@ -181,34 +161,27 @@ Esta diversidad muestra que la ubicación de los objetos depende del **modelo de
 
 ***
 
-## **¿Qué es la recolección de basura (garbage collection)?**
+### **¿Qué es la recolección de basura (garbage collection)?**
 
 La **recolección de basura** es un mecanismo automático utilizado por lenguajes como Java, C# o Python para liberar memoria que ya no está siendo utilizada por el programa. Cuando un objeto deja de estar referenciado —es decir, ya no hay ninguna variable que apunte a él—, el recolector de basura identifica que ese objeto ya no es accesible y lo elimina de la memoria para evitar fugas. Este proceso evita que el programador tenga que liberar memoria manualmente, reduciendo errores como *memory leaks* o accesos a memoria liberada.
 
 Este mecanismo implica que la gestión de memoria es más segura, pero también introduce un coste: el recolector se ejecuta periódicamente y puede afectar al rendimiento en ciertos momentos. Aun así, para la mayoría de aplicaciones, el equilibrio entre seguridad y eficiencia es favorable. En contraste, lenguajes como C o C++ no utilizan recolección de basura y dependen por completo de que el programador gestione la memoria correctamente.
 
 
-
 ## 7. ¿Qué es un método? ¿Qué es la **sobrecarga de métodos**? 
 
-### 
+
+### **¿Qué es un método?**
+
+Un método es una **función encapsulada** (dentro de una clase) que describe una acción o comportamiento que los objetos de dicha clase pueden realizar. Los métodos operan sobre datos del propio objeto, teniendo acceso directo a sus atributos, por lo que su comportamiento esta estrechamente ligado con el estado de cada instancia. Tambien pueden definir la forma en la que otros componentes del programa interactúan con un objeto.
 
 ***
 
-## **¿Qué es un método?**
-
-Un método es una **función asociada a una clase** que describe una acción o comportamiento que los objetos de dicha clase pueden realizar. A diferencia de las funciones sueltas de lenguajes como C, los métodos operan sobre datos propios del objeto, teniendo acceso directo a sus atributos. Esto permite que el comportamiento esté estrechamente ligado al estado de cada instancia, creando un modelo coherente y encapsulado.
-
-Además del acceso al estado, los métodos definen la forma en que otros componentes del programa interactúan con un objeto. En Java, la invocación de un método implica enviar una solicitud al objeto para que ejecute una operación concreta. De este modo, los métodos actúan como la interfaz pública que controla cómo se usa un objeto, manteniendo ocultos los detalles internos de su implementación.
-
-***
-
-## **¿Qué es la sobrecarga de métodos?**
+### **¿Qué es la sobrecarga de métodos?**
 
 La **sobrecarga de métodos** consiste en definir varios métodos con el **mismo nombre**, pero con **diferentes parámetros** (ya sea en número, tipo o ambos). Este mecanismo permite que un mismo comportamiento conceptual pueda aplicarse en distintas situaciones, adaptándose a diferentes tipos de datos o combinaciones de argumentos. A nivel del lenguaje, Java determina cuál de los métodos sobrecargados debe ejecutarse en función de la lista de parámetros proporcionada en la llamada.
 
-Este concepto no debe confundirse con la sobrescritura (*override*), que ocurre en herencia. La sobrecarga trabaja dentro de la misma clase y se resuelve en **tiempo de compilación**, lo que la convierte en una forma de polimorfismo estático. Gracias a este recurso, los programas pueden ser más expresivos, ofrecer múltiples variantes de una misma operación y mantener nombres consistentes para acciones similares.
-
+Este concepto no debe confundirse con la sobrescritura (*override*), que ocurre en herencia. La sobrecarga trabaja dentro de la misma clase y se resuelve en **tiempo de compilación**, lo que la convierte en una forma de polimorfismo estático.
 
 
 ## 8. Ejemplo mínimo de clase en Java, que se llame Punto, con dos atributos, x e y, con un método que se llame `calculaDistanciaAOrigen`, que calcule la distancia a la posición 0,0. Por sencillez, los atributos deben tener visibilidad por defecto. Crea además un ejemplo de uso con una instancia y uso del método
@@ -218,47 +191,35 @@ Este concepto no debe confundirse con la sobrescritura (*override*), que ocurre 
 ```java
 // Archivo: Punto.java
 class Punto {
-    // Atributos con visibilidad por defecto (package-private)
-    double x;
-    double y;
-
-    // Constructor sencillo
-    Punto(double x, double y) {
-        this.x = x;
-        this.y = y;
-    }
+    int x;
+    int y;
 
     // Método que calcula la distancia al origen (0,0)
     double calculaDistanciaAOrigen() {
-        return Math.sqrt(x * x + y * y);
+        return sqrt(x * x + y * y);
     }
 }
 ```
 
-A continuación, se incluye un **ejemplo de uso** creando una instancia de `Punto` y llamando al método `calculaDistanciaAOrigen`. Puede compilarse en el mismo paquete (mismo directorio, sin declarar paquetes) para respetar la visibilidad por defecto de los atributos.
+A continuación, se incluye un **ejemplo de uso** creando una instancia de `Punto` y llamando al método `calculaDistanciaAOrigen`.
 
 ```java
 // Archivo: EjemploUso.java
 public class EjemploUso {
     public static void main(String[] args) {
-        Punto p = new Punto(3.0, 4.0);
-        double distancia = p.calculaDistanciaAOrigen();
-        System.out.println("Distancia al origen: " + distancia); // Imprime 5.0
+        Punto miPunto = new Punto();
+        miPunto.x = 5;
+        miPunto.y = 6;
+        double distancia = miPunto.calculaDistanciaAOrigen();
+        System.out.println("Distancia al origen: " + distancia); 
     }
 }
 ```
 
-Este diseño mantiene el código simple y directo para centrarse en el concepto de **clase**, **atributos** y **método**. En contextos reales, sería habitual hacer los atributos `private` y exponer métodos de acceso (*getters/setters*) para practicar **encapsulación**, pero aquí se ha seguido la indicación de visibilidad por defecto para mayor sencillez.
-
-
 
 ## 9. ¿Cuál es el punto de entrada en un programa en Java? ¿Qué es `static` y para qué vale? ¿Sólo se emplea para ese método `main`? ¿Para qué se combina con `final`?
 
-### 
-
-***
-
-## **¿Cuál es el punto de entrada en un programa en Java?**
+### **¿Cuál es el punto de entrada en un programa en Java?**
 
 El punto de entrada de una aplicación Java estándar es el método:
 
@@ -272,7 +233,7 @@ Es importante notar que **pueden existir múltiples métodos `main`** sobrecarga
 
 ***
 
-## **¿Qué es `static` y para qué vale?**
+### **¿Qué es `static` y para qué vale?**
 
 `static` indica que un **miembro pertenece a la clase**, no a las instancias. Un **método `static`** puede llamarse sin crear objetos, y un **campo `static`** tiene una única copia compartida por todas las instancias. Esto resulta útil para **métodos de utilidad** (por ejemplo, `Math.sqrt`), **fábricas** (*factory methods*), **contadores globales** o **configuración compartida**.
 
@@ -280,7 +241,7 @@ Además de métodos y campos, `static` puede aplicarse a **bloques estáticos** 
 
 ***
 
-## **¿Sólo se emplea para ese método `main`?**
+### **¿Sólo se emplea para ese método `main`?**
 
 No. Aunque `static` es necesario en `main` para permitir que la JVM lo invoque **sin instancia**, su uso es mucho más amplio. Se emplea constantemente en **métodos utilitarios**, **constantes compartidas** (`public static final`), **constructores estáticos simulados** (métodos fábrica) y **miembros de clase** cuyo valor debe ser único y común a todas las instancias.
 
@@ -288,7 +249,7 @@ También se usa en **clases anidadas estáticas** para modelar tipos relacionado
 
 ***
 
-## **¿Para qué se combina con `final`?**
+### **¿Para qué se combina con `final`?**
 
 La combinación **`static final`** se usa típicamente para declarar **constantes**:
 
@@ -305,15 +266,12 @@ public static final double PI = 3.141592653589793;
 
 ## 10. Intenta ejecutar un poco de Java de forma básica, con los comandos `javac` y `java`. ¿Cómo podemos compilar el programa y ejecutarlo desde linea de comandos? ¿Java es compilado? ¿Qué es la **máquina virtual**? ¿Qué es el *byte-code* y los ficheros `.class`?
 
-### 
 
-***
-
-# **¿Cómo se compila y ejecuta un programa Java desde la línea de comandos?**
+### **¿Cómo se compila y ejecuta un programa Java desde la línea de comandos?**
 
 Para ejecutar Java desde consola se necesitan dos comandos: **`javac`** (compilador) y **`java`** (ejecutor de la JVM).
 
-### **1. Compilación con `javac`**
+#### **1. Compilación con `javac`**
 
 Supongamos que se tiene un archivo `Ejemplo.java` con un método `main`:
 
@@ -323,7 +281,7 @@ javac Ejemplo.java
 
 Este comando **no genera un ejecutable**, sino uno o varios ficheros `.class` correspondientes a cada clase del archivo. Cada `.class` contiene *bytecode*, el formato intermedio que entiende la máquina virtual.
 
-### **2. Ejecución con `java`**
+#### **2. Ejecución con `java`**
 
 Una vez compilado, se ejecuta así:
 
@@ -341,7 +299,7 @@ java com.miapp.pruebas.Ejemplo
 
 ***
 
-# **¿Java es un lenguaje compilado?**
+### **¿Java es un lenguaje compilado?**
 
 Java es **compilado y también interpretado**, dependiendo de qué fase se observe.
 
@@ -353,7 +311,7 @@ La ventaja es que un mismo programa compilado (.class) puede ejecutarse en cualq
 
 ***
 
-# **¿Qué es la máquina virtual de Java (JVM)?**
+### **¿Qué es la máquina virtual de Java (JVM)?**
 
 La **JVM** es un programa que actúa como “ordenador virtual” dentro del ordenador real.  
 Su función es:
@@ -369,7 +327,7 @@ Gracias a la JVM, un mismo programa Java puede ejecutarse en múltiples platafor
 
 ***
 
-# **¿Qué es el *bytecode* y qué son los ficheros `.class`?**
+### **¿Qué es el *bytecode* y qué son los ficheros `.class`?**
 
 El **bytecode** es un **código intermedio** que no es comprensible por el procesador físico (como el de un `.exe`), pero sí por la JVM.  
 Tiene varias características:
@@ -387,11 +345,8 @@ Después de compilar con `javac`, cada clase genera su archivo `.class`. Incluso
 
 ## 11. En el código anterior de la clase `Punto` ¿Qué es `new`? ¿Qué es un **constructor**? Pon un ejemplo de constructor en una clase `Empleado` que tenga DNI, nombre y apellidos
 
-### 
 
-***
-
-## **¿Qué es `new`?**
+### **¿Qué es `new`?**
 
 `new` es el operador en Java que **reserva memoria en el heap** y **crea una instancia** (un objeto) de una clase. Al utilizarlo, se invoca internamente un **constructor** de esa clase, que inicializa el estado del nuevo objeto. El resultado de `new` es una **referencia** que apunta al objeto en memoria, y esa referencia se almacena en una variable del tipo de la clase o de un tipo compatible.
 
@@ -399,7 +354,7 @@ Este operador es esencial para trabajar con objetos porque, a diferencia de tipo
 
 ***
 
-## **¿Qué es un constructor?**
+### **¿Qué es un constructor?**
 
 Un **constructor** es un **método especial** de una clase que **no tiene tipo de retorno** y **se llama automáticamente** al crear un objeto con `new`. Su propósito es **inicializar los atributos** del objeto y dejarlo listo para su uso, garantizando que comience su vida con un estado válido. Puede haber **varios constructores** en la misma clase (sobrecarga), con diferentes listas de parámetros para cubrir necesidades de inicialización distintas.
 
@@ -407,7 +362,7 @@ Si no se declara ningún constructor, Java **genera uno por defecto** sin parám
 
 ***
 
-## **Ejemplo: clase `Empleado` con constructor**
+### **Ejemplo: clase `Empleado` con constructor**
 
 A continuación, se muestra una clase `Empleado` mínima con tres atributos (`dni`, `nombre`, `apellidos`) y un **constructor** que los recibe como parámetros e inicializa el objeto. Se emplea **visibilidad por defecto** en los atributos para mantener la sencillez del ejemplo (en código real se recomienda `private` y el uso de encapsulación).
 
@@ -452,11 +407,8 @@ Este patrón muestra cómo `new` **crea** el objeto y cómo el **constructor** *
 
 ## 12. ¿Qué es la referencia `this`? ¿Se llama igual en todos los lenguajes? Pon un ejemplo del uso de `this` en la clase `Punto`
 
-### 
 
-***
-
-## **¿Qué es la referencia `this`?**
+### **¿Qué es la referencia `this`?**
 
 `this` es una referencia implícita que apunta al **objeto actual** dentro del contexto de una instancia. Permite acceder a los **atributos** y **métodos** de esa instancia desde dentro de la propia clase. En términos prácticos, sirve para dejar claro que se está hablando del campo del objeto y no de una variable local o un parámetro con el mismo nombre.
 
@@ -464,7 +416,7 @@ Además de desambiguar nombres, `this` se utiliza para **encadenar constructores
 
 ***
 
-## **¿Se llama igual en todos los lenguajes?**
+### **¿Se llama igual en todos los lenguajes?**
 
 No exactamente. La idea existe en la mayoría de lenguajes orientados a objetos, pero el **identificador varía**. En Java, C#, Kotlin y JavaScript se utiliza `this`. En C++ se emplea `this` pero como **puntero** (`this->campo`). En Python el concepto se expresa con el primer parámetro explícito del método, habitualmente llamado `self`, que cumple el papel de la instancia actual. En Swift y Scala también se usa `self` o `this` según el lenguaje y el estilo.
 
@@ -472,7 +424,7 @@ Pese a las diferencias de nombre o matiz (referencia vs. puntero vs. parámetro 
 
 ***
 
-## **Ejemplo de uso de `this` en la clase `Punto`**
+### **Ejemplo de uso de `this` en la clase `Punto`**
 
 En el ejemplo siguiente, `this` se utiliza para:
 
@@ -599,11 +551,8 @@ Si se deseara robustecer el método, podría añadirse una verificación de `nul
 
 ## 14. El paso del `Punto` como parámetro a un método, es **por copia** o **por referencia**, es decir, si se cambia el valor de algún atributo del punto pasado como parámetro, dichos cambios afectan al objeto fuera del método? ¿Qué ocurre si en vez de un `Punto`, se recibiese un entero (`int`) y dicho entero se modificase dentro de la función? 
 
-### 
 
-***
-
-## **¿Es por copia o por referencia al pasar un `Punto`?**
+### **¿Es por copia o por referencia al pasar un `Punto`?**
 
 En Java **todo** se pasa **por valor**. Cuando el parámetro es un objeto (por ejemplo, `Punto`), lo que se **copia por valor** es la **referencia** al objeto. Eso significa que **dentro del método** se recibe otra **referencia** que apunta **al mismo objeto** en el heap. Por ello, si se **modifican los atributos** del `Punto` dentro del método (p. ej., `p.x = 10;`), esos cambios se observarán **fuera** del método, porque el objeto subyacente es el mismo.
 
@@ -620,7 +569,7 @@ void cambiaPunto(Punto p) {
 
 ***
 
-## **¿Afectan los cambios a los atributos fuera del método?**
+### **¿Afectan los cambios a los atributos fuera del método?**
 
 Sí, si el método **modifica campos** del objeto pasado, el cambio se refleja fuera porque **ambas referencias** (la del llamador y la del parámetro) apuntan al **mismo objeto**. Esto es un patrón común en Java: “**pass-by-value of the reference**”. Es importante distinguir **mutar el objeto** (se observa fuera) de **reasignar la referencia** (no se observa fuera).
 
@@ -637,7 +586,7 @@ cambiaPunto(a);
 
 ***
 
-## **¿Qué ocurre con un `int` (primitivo) pasado como parámetro?**
+### **¿Qué ocurre con un `int` (primitivo) pasado como parámetro?**
 
 Para **tipos primitivos** como `int`, Java también pasa **por valor**, pero ahora lo que se copia es el **valor numérico** en sí. Si dentro del método se cambia el parámetro (por ejemplo, `n = 99;`), ese cambio **no afecta** a la variable original del llamador, porque se está modificando **solo la copia local**.
 
@@ -667,11 +616,8 @@ incrementa(x);
 
 ## 15. ¿Qué es el método `toString()` en Java? ¿Existe en otros lenguajes? Pon un ejemplo de `toString()` en la clase `Punto` en Java
 
-### 
 
-***
-
-## **¿Qué es `toString()` en Java?**
+### **¿Qué es `toString()` en Java?**
 
 `toString()` es un método heredado de la clase base `java.lang.Object` que devuelve una **representación textual** del objeto. Sirve para obtener una cadena que describa su estado, y se invoca de forma implícita cuando un objeto se concatena con cadenas o se imprime con `System.out.println`. Por defecto, la implementación de `Object` muestra el nombre de la clase y un identificador hash, por lo que suele **sobrescribirse** para que la salida sea más útil y legible.
 
@@ -679,7 +625,7 @@ Sobrescribir `toString()` ayuda a **depurar**, a **registrar logs** y a hacer m�
 
 ***
 
-## **¿Existe en otros lenguajes?**
+### **¿Existe en otros lenguajes?**
 
 La idea de una **representación en cadena** existe en la mayoría de lenguajes orientados a objetos, aunque con nombres y matices distintos. En **C#**, el método equivalente también se llama `ToString()`. En **Python**, los métodos relacionados son `__str__` (representación humana) y `__repr__` (representación para depuración); al imprimir un objeto, se usa `__str__` si está definido, y si no, `__repr__`. En **JavaScript**, existe `toString()` en objetos y prototipos, y se invoca en contextos de concatenación o conversión a cadena.
 
@@ -687,7 +633,7 @@ En **C++**, no hay un método estándar `toString()`, pero el patrón equivalent
 
 ***
 
-## **Ejemplo de `toString()` en la clase `Punto`**
+### **Ejemplo de `toString()` en la clase `Punto`**
 
 En el ejemplo siguiente, se añade un `toString()` que devuelve una forma legible como `Punto(x=3.0, y=4.0)`. Se mantiene la **visibilidad por defecto** en los atributos para ser consistentes con los ejemplos anteriores.
 
@@ -749,11 +695,7 @@ Este patrón facilita la depuración y la lectura de logs, ya que muestra el **e
 ## 16. Reflexiona: ¿una clase es como un `struct` en C? ¿Qué le falta al `struct` para ser como una clase y las variables de ese tipo ser instancias?
 
 
-### 
-
-***
-
-## **¿Una clase es como un `struct` en C?**
+### **¿Una clase es como un `struct` en C?**
 
 Un `struct` en C puede considerarse como un **antecedente muy simplificado** de lo que luego será una clase en lenguajes orientados a objetos. Ambos permiten **agrupar datos** bajo un mismo tipo, lo que facilita manejar varias variables relacionadas como una unidad coherente. Sin embargo, la similitud termina en ese punto: un `struct` solo contiene **datos**, mientras que una clase combina **datos + comportamientos**, integrando también mecanismos como encapsulación, herencia y polimorfismo, que son esenciales en la orientación a objetos.
 
@@ -761,7 +703,7 @@ En este sentido, una clase no solo describe qué información tendrá un objeto,
 
 ***
 
-## **¿Qué le falta al `struct` de C para ser como una clase?**
+### **¿Qué le falta al `struct` de C para ser como una clase?**
 
 Para que un `struct` se asemejara a una clase orientada a objetos, necesitaría incorporar elementos clave que C no posee. En primer lugar, le falta la capacidad de **definir funciones asociadas directamente al tipo**, es decir, métodos que operen sobre los propios datos del objeto. En C, las funciones que trabajan con un `struct` existen externamente y deben recibir un puntero o la estructura completa, sin la sintaxis ni el modelo mental de “método del objeto”.
 
@@ -775,11 +717,8 @@ En resumen, un `struct` aporta solo la parte "datos" de una clase. Para converti
 
 ## 17. Quitemos un poco de magia a todo esto: ¿Como se podría “emular”, con `struct` en C, la clase `Punto`, con su función para calcular la distancia al origen? ¿Qué ha pasado con `this`?
 
-### 
 
-***
-
-## **Emulación básica con `struct` + funciones “método”**
+### **Emulación básica con `struct` + funciones “método”**
 
 En C no existen métodos asociados al tipo, así que se define un `struct` con los **datos** y funciones externas que operan sobre él. El patrón común es pasar un **puntero al `struct`** como primer parámetro de cada función, lo que emula el objeto receptor del método.
 
@@ -836,7 +775,7 @@ Con este enfoque, **las “instancias”** en C son simplemente **variables** de
 
 ***
 
-## **¿Qué ha pasado con `this`?**
+### **¿Qué ha pasado con `this`?**
 
 En C no existe `this`. Lo que en Java se obtiene de forma **implícita** dentro de un método de instancia, en C se pasa **explícitamente** como un **puntero** al primer parámetro (en el ejemplo se llamó `self`, aunque también se usa `p`, `obj`, etc.). Por eso, el acceso a campos se realiza con `self->x` y `self->y` en lugar de `this.x` o `x`.
 
@@ -844,7 +783,7 @@ Este paso explícito hace visibles detalles que en lenguajes OO quedan ocultos: 
 
 ***
 
-## **Notas prácticas (constructor, memoria, estilo)**
+### **Notas prácticas (constructor, memoria, estilo)**
 
 C no tiene **constructores** ni **sobrecarga**. Se puede ofrecer un **inicializador** tipo `Punto_make(x, y)` que devuelva un `Punto` ya rellenado, o una función `Punto_init(Punto* self, double x, double y)` si se prefiere inicializar una estructura ya reservada (especialmente útil cuando se trabaja en heap o en arreglos). Para memoria dinámica, se usa `malloc`/`free`; para memoria automática, basta con declarar la variable.
 
