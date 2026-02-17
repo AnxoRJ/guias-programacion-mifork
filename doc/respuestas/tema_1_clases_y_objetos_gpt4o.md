@@ -147,17 +147,15 @@ En los lenguajes orientados a prototipos, los objetos se crean a partir de otros
 
 ### **¿Dónde se almacenan en memoria los objetos?**
 
-En la mayoría de lenguajes orientados a objetos modernos, los objetos se almacenan en una zona de memoria llamada **heap**. Esta área está destinada a la creación dinámica de datos cuyo tamaño o vida útil no se conoce en tiempo de compilación. En Java, por ejemplo, cada vez que se utiliza la palabra clave `new`, el objeto resultante se coloca en el heap y lo que se maneja en el código es una **referencia** a esa ubicación. Esto permite que los objetos vivan más allá del ámbito de un método, siempre que existan referencias apuntando hacia ellos.
+En la mayoría de lenguajes orientados a objetos modernos, los objetos se almacenan en el **heap** (área destinada a la creación dinámica de datos cuyo tamaño o vida útil no se conoce en tiempo de compilación). Esto tiene ventajas como que se reduce dinámicamente el tamaño del objeto y que lo que está en el heap vive mas allá del método (función). Esto último quiere decir que lo que se maneja en el método es una referencia a un objeto almacenado en el heap.
 
-En contraste, en C++ con orientación a objetos, un objeto puede almacenarse tanto en el **heap** (si se crea con `new`) como en la **pila** (*stack*) si se declara como variable local normal. Esto significa que su posición en memoria y su ciclo de vida dependen de cómo se cree el objeto. En lenguajes como Java o C#, sin embargo, los objetos siempre residen en el heap, mientras que la pila solo almacena referencias.
+Sin embargo, esto tambien tiene desventajas como que hay que liberar la memoria cuando un objeto ya no se necesita. Esto se puede hacer manualmente o automaticamente con un recolector de basura.
 
 ***
 
 ### **¿Es igual en todos los lenguajes?**
 
-No, no todos los lenguajes almacenan los objetos de la misma manera. Lenguajes como Java y C# siguen un modelo uniforme donde todas las instancias de clases viven en el heap. Python también coloca sus objetos en el heap, aunque internamente maneja un sistema propio de administración de memoria. C++, por su parte, ofrece flexibilidad total al permitir objetos en el stack, en el heap o incluso en memoria estática, dependiendo de cómo se definan.
-
-Esta diversidad muestra que la ubicación de los objetos depende del **modelo de memoria del lenguaje** y de si este cuenta con **gestión automática de memoria**. Cuanto más control tiene el programador (como en C++), más variabilidad hay sobre dónde se guardan los objetos. Cuanto más automático sea el lenguaje (como Java), más uniforme es el modelo y menos responsabilidad recae en el desarrollador.
+No es igual en todos los lenguajes, ya que en algunos (como C++) se permite almacenar objetos tanto en el **heap** como en el **stack** (pila). Esto depende del **modelo de memoria del lenguaje** y de si este cuenta con **gestion automática de memoria**.
 
 ***
 
@@ -224,7 +222,13 @@ public class EjemploUso {
 El punto de entrada de una aplicación Java estándar es el método:
 
 ```java
-public static void main(String[] args)
+class Ejercicio9{  //o clase Main
+    public static void main(String[] args){
+        System.exit(2);
+    }
+
+    static final double PI = 3.14; 
+}
 ```
 
 Este método debe ser **`public`** (accesible desde la JVM), **`static`** (no requiere instancia para ser invocado), **`void`** (no devuelve valor) y recibir un **arreglo de `String`** como parámetro (`String[] args`). También se admite la forma con **varargs**: `public static void main(String... args)`.
@@ -235,9 +239,11 @@ Es importante notar que **pueden existir múltiples métodos `main`** sobrecarga
 
 ### **¿Qué es `static` y para qué vale?**
 
-`static` indica que un **miembro pertenece a la clase**, no a las instancias. Un **método `static`** puede llamarse sin crear objetos, y un **campo `static`** tiene una única copia compartida por todas las instancias. Esto resulta útil para **métodos de utilidad** (por ejemplo, `Math.sqrt`), **fábricas** (*factory methods*), **contadores globales** o **configuración compartida**.
-
-Además de métodos y campos, `static` puede aplicarse a **bloques estáticos** (se ejecutan una vez al cargar la clase) y a **clases anidadas estáticas** (anidadas que no necesitan referencia implícita a la instancia de la clase envolvente). A nivel conceptual, `static` acerca el uso a “funciones y datos globales controlados”, manteniendo el modelo orientado a objetos.
+* Dice que el atributo o método pertenece a la clase, no a una instancia concreta.
+* No se necesita un objeto para usarlos, desde fuera se usa el nombre de la clase.
+* No existe this.
+* No se puede usar desde un metodo `static` nada que no sea static.
+* No abusar.
 
 ***
 
@@ -254,7 +260,7 @@ También se usa en **clases anidadas estáticas** para modelar tipos relacionado
 La combinación **`static final`** se usa típicamente para declarar **constantes**:
 
 ```java
-public static final double PI = 3.141592653589793;
+static final double PI = 3.14;
 ```
 
 *   **`static`**: hay **una única copia** asociada a la clase.
