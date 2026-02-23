@@ -29,6 +29,11 @@ Entre las ventajas de la ocultación de información pueden enumerarse las sigui
 
 Estas ventajas hacen que la encapsulación sea uno de los pilares fundamentales de la POO y un recurso clave para escribir software más robusto, legible y fácil de mantener.
 
+### Anotación:
+Encapsulación (juntar estado y comportamiento en un artefacto(la clase), y ahora puedo ocultar ciertas partes del exterior) tiene que ver con "protección":
+* Evito estados no validos de mis objetos.
+* Evito dependencias desde fuera que no quiero. 
+
 
 
 ## 2. ¿Qué se entiende por la **interfaz pública** de un objeto o clase en POO? Describe brevemente cómo se relaciona con la ocultación de información.
@@ -37,6 +42,9 @@ En POO, la **interfaz pública** de un objeto o clase se entiende como el conjun
 
 Esta interfaz está directamente relacionada con la **ocultación de información**, ya que permite separar lo que debe saberse del objeto (su comportamiento visible) de lo que debe mantenerse privado (su estructura interna y lógica de funcionamiento). Gracias a esta separación, se ocultan los datos y procedimientos que no deberían modificarse directamente, obligando a acceder al estado interno únicamente mediante los métodos definidos. Así se consigue un diseño más seguro, mantenible y menos propenso a errores, ya que cualquier cambio interno no afecta a quienes utilizan la clase mientras la interfaz pública se mantenga estable.
 
+### Anotación:
+La interfaz pública son los miembros que se ven desde fuera, es decir, los que no están ocultos.
+
 
 
 ## 3. Brevemente: ¿Por qué hay que ser conscientes y diseñar con cuidado la **interfaz pública** de una clase? ¿Es fácil cambiarla?
@@ -44,6 +52,9 @@ Esta interfaz está directamente relacionada con la **ocultación de informació
 Diseñar con cuidado la **interfaz pública** de una clase es fundamental porque actúa como el contrato que otros módulos, clases u objetos utilizarán para interactuar con ella. Si este contrato está mal definido —por ejemplo, si expone más de lo necesario o si permite modificar el estado de forma insegura— se corre el riesgo de generar dependencias indeseadas, acoplamiento excesivo y dificultades para mantener la coherencia interna del objeto. Una interfaz pública clara, mínima y bien pensada contribuye a que la clase sea más robusta y su uso más intuitivo.
 
 Por otro lado, cambiar una **interfaz pública** no suele ser fácil, ya que cualquier modificación puede afectar a todos los componentes que la estén utilizando. Incluso cambios aparentemente pequeños, como renombrar un método o alterar sus parámetros, pueden romper código existente y obligar a realizar ajustes en múltiples lugares. Por este motivo, es habitual considerar la interfaz pública como la parte más estable del diseño, mientras que la implementación interna puede evolucionar con mucha más libertad.
+
+### Anotación:
+La interfaz pública, si se cambia, tiene más consecuencias que cualquier cambio en la parte oculta.
 
 
 
@@ -54,6 +65,12 @@ Las **invariantes de clase** son condiciones lógicas que deben cumplirse siempr
 La **ocultación de información** ayuda porque impide que el código externo modifique directamente los atributos, lo cual podría romper estas invariantes sin control. Al obligar a que los cambios se realicen únicamente a través de métodos definidos por la clase, es posible validar los datos, comprobar las restricciones y garantizar que las invariantes se cumplan siempre. De esta forma, se mantiene la coherencia interna del objeto y se evita que su estado quede en situaciones inconsistentes o erróneas.
 
 Además, gracias a la encapsulación, la propia clase puede reorganizar cómo mantiene internamente estos datos sin afectar a quienes la usan. Esto permite evolucionar la implementación, mejorarla o reforzar las invariantes sin necesidad de modificar el código externo. En conjunto, la ocultación de información se convierte en una herramienta clave para preservar la integridad lógica del objeto y facilitar un diseño más robusto y confiable.
+
+### Anotación:
+Las invariantes de clase son condiciones que los objetos de esa clase deben cumplir para ser válidos y durante toda la vida del objeto. Por ejemplo:
+* Cuenta bancaria con saldo siempre positivo (>0) .
+* Edad de una persona (>= 0).
+* Rectángulo debe tener ancho y alto(!= 0)
 
 
 
@@ -114,6 +131,30 @@ La **interfaz pública** de `Punto` está compuesta por aquello que el código e
 
 En Java, `public` indica que el miembro (clase, método o campo) es **accesible desde cualquier lugar** donde la clase sea visible, formando parte de su interfaz pública. En cambio, `private` limita el acceso **exclusivamente** al interior de la propia clase, lo que posibilita la **ocultación de información**: se evita que código externo modifique directamente el estado interno y se obliga a pasar por métodos controlados (por ejemplo, `setX`/`setY`), donde puede **validarse** y **preservarse** la invariante (como “no permitir NaN/∞”). Para quien venga de C/C++ sin OOP, puede verse como una `struct` cuyos campos no son accesibles directamente y sólo se manipulan mediante funciones asociadas que hacen de “guardas” del estado.
 
+### Anotación:
+```java
+class Punto{
+    private double x;
+    private double y;
+
+    public Punto(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public double distanciaAOrigen(){
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+}
+```
+
+Principalmente todo es privado, luego ya se ve lo que es público.
+
+En java:
+* `public`: clases, atributos y métodos.
+* `private`: clases internas, atributos y métodos.
+
+
 
 
 ## 6. En Java, ¿A quiénes se pueden aplicar los modificadores `public` o `private`?
@@ -136,6 +177,10 @@ En otros lenguajes, la situación varía. Por ejemplo, C++ ofrece `public`, `pri
 
 En conjunto, prácticamente todos los lenguajes orientados a objetos amplían la visibilidad más allá de lo público y privado para ofrecer un control más fino sobre la encapsulación. Java se sitúa en un punto intermedio, con un conjunto claro y relativamente simple de niveles, suficiente para mantener interfaces públicas limpias y ocultar de forma robusta los detalles internos.
 
+### Anotación:
+En Java:
+* `protected` solo se ve desde "subclases".
+* `package-private` o sin modificador, solo se ve desde el paquete.
 
 
 ## 8. Responde: Los miembros de instancia privados de un objeto están ocultos para (a) otras clases o (b) otras instancias, aunque sean de la misma clase. Pon un ejemplo añadiendo un método `calcularDistanciaAPunto(Punto otro)` y explica la respuesta.
@@ -184,6 +229,28 @@ public final class Punto {
 
 En suma, `private` implementa **ocultación frente a otras clases**, no frente a **otras instancias de la misma clase**. La razón es que la unidad de encapsulación es la **clase**: el compilador permite que el código de `Punto` acceda a los detalles privados de **cualquier** `Punto`, lo cual simplifica operaciones internas (comparaciones, copias, cálculos) sin necesidad de exponer getters o ampliar la visibilidad. Esta propiedad hace posible mantener una interfaz pública mínima y, a la vez, implementar lógica rica y segura dentro de la clase.
 
+### Anotación:
+La a, está oculto para código de otras clases.
+```java
+class Punto{
+    private double x;
+    private double y;
+
+    public Punto(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public double distanciaAOrigen(){
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+    public double distanciaAOtroPunto(Punto otro){
+        double dx = this.x - otro.x;
+        double dy = this.y - otro.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+}
+```
 
 
 ## 9. ¿Qué son los métodos "getter" y "setter" en los lenguajes orientados a objetos?
@@ -193,6 +260,38 @@ En los lenguajes orientados a objetos, los métodos **getter** y **setter** son 
 Un **getter** es un método que devuelve el valor de un atributo privado. Normalmente su nombre comienza por `get` seguido del nombre del atributo con mayúscula inicial, como `getX()` o `getNombre()`. Por otro lado, un **setter** permite modificar el valor de un campo, y suele llamarse `setX()` o `setNombre()`. Dentro del setter puede incluirse cualquier control necesario para evitar valores inválidos o inconsistentes, con lo cual se refuerza la integridad del objeto.
 
 Estos métodos sirven también para desacoplar la interfaz pública de la implementación interna. Si en el futuro se cambia la forma en la que un atributo se almacena, calcula o valida, los clientes de la clase no necesitan modificar su código siempre que sigan usando los mismos getters y setters. De esta manera, se consigue una mayor flexibilidad y se facilita el mantenimiento del programa.
+
+### Anotación:
+`setter` y `getter` permiten dar acceso a atributos privados para obtener sus datos o cambiarlos.
+```java
+class Punto{
+    private double x;
+    private double y;
+
+    public Punto(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public double distanciaAOrigen(){
+        return Math.sqrt(this.x * this.x + this.y * this.y);
+    }
+    public double distanciaAOtroPunto(Punto otro){
+        double dx = this.x - otro.x;
+        double dy = this.y - otro.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+    public double getX(){
+        return this.x;
+    }
+    public void setX(double x){
+        this.x = x;
+    }
+    public String getNombre(){
+        return this.nombre;
+    }
+}
+```
 
 
 
@@ -206,6 +305,9 @@ En este sentido, la encapsulación actúa como una barrera que **evita accesos i
 
 En resumen, cuando se habla de “seguridad” en encapsulación se hace referencia a la protección del **estado interno** y a la prevención de **errores lógicos** dentro del propio programa, no a la defensa contra ataques externos. Es una forma de seguridad estructural o de diseño, no de seguridad informática en sentido estricto.
 
+### Anotación:
+No, es facilitar una programación con menos bugs.
+
 
 
 ## 11. ¿Qué diferencia hay entre **miembro de instancia** y **miembro de clase**? ¿Los miembros de clase también se pueden ocultar?
@@ -218,6 +320,10 @@ Respecto a la ocultación, los **miembros de clase también pueden ocultarse** u
 
 En conjunto, ambos tipos de miembros participan en la encapsulación: los atributos de instancia protegen el estado individual de cada objeto, mientras que los miembros de clase protegen o comparten información relevante para la clase completa. Tener control sobre su visibilidad permite definir con precisión qué forma parte de la interfaz pública y qué debe permanecer como detalle interno.
 
+### Anotación:
+* Miembro de clase: no asociado a ninguna instancia, es compartido por todas las instancias. En métodos, no hay this.
+* Miembro de instancia: está asociado a cada instancia, no estan compartidos.
+
 
 
 ## 12. Brevemente: ¿Tiene sentido que los constructores sean privados?
@@ -229,6 +335,12 @@ Un caso típico es el **patrón Singleton**, donde solo debe existir una única 
 También tiene sentido usar constructores privados en clases que solo proporcionan **métodos utilitarios estáticos**, como `java.lang.Math`, donde no tiene sentido crear instancias porque la clase no representa objetos con estado. De este modo, hacer el constructor privado evita que otros desarrolladores creen instancias accidentales o inútiles, reforzando así la intención de diseño.
 
 En resumen, aunque no es lo más frecuente en clases corrientes, los constructores privados son una herramienta útil para **controlar la creación de objetos**, **reforzar la encapsulación** y **expresar más claramente la intención** de cómo debe utilizarse una clase.
+
+### Anotación:
+A veces:
+* Un constructor oculto, llamado desde otros constructores públicos.
+* Cuando prefieres usar métodos factoria 
+* Cuando quiero controlar el número de instancias.
 
 
 
@@ -413,6 +525,24 @@ public final class Punto {
 
 Con este enfoque, cualquier cliente que ya dependiera de la **interfaz pública** puede seguir compilando y funcionando sin cambios. La clase conserva sus invariantes mediante validación centralizada y controla su estado interno a través de métodos, demostrando la utilidad práctica de la encapsulación: el **qué** expone la clase permanece estable, mientras que el **cómo** se implementa puede evolucionar libremente.
 
+### Anotación:
+```java
+class Punto{
+    //private double x;
+    //private double y;
+    private double[] coordenada = new double[2];
+
+    public Punto(double x, double y){
+        this.coordenada[0] = x;
+        this.coordenada[1] = y;
+    }
+
+    public double distanciaAOrigen(){
+        return Math.sqrt(this.coordenada[0] * this.coordenada[0] + this.coordenada[1] * this.coordenada[1]);
+    }
+}
+```
+
 
 
 ## 16. Si un atributo va a tener un método "getter" y "setter" públicos, ¿no es mejor declararlo público? ¿Cuál es la convención más habitual sobre los atributos, que sean públicos o privados? ¿Tiene esto algo que ver con las "invariantes de clase"?
@@ -424,6 +554,12 @@ La **convención más habitual** —tanto en Java como en la mayoría de lenguaj
 Esto tiene una relación directa con las **invariantes de clase**. Las invariantes son condiciones que deben cumplirse siempre para que el objeto sea válido, y sólo pueden garantizarse si los cambios pasan por puntos de control —como setters o métodos específicos— donde puede verificarse que el nuevo estado cumple las restricciones. Si los atributos fueran públicos, cualquiera podría asignar valores que violaran dichas invariantes (como números negativos, valores no permitidos o incoherencias entre atributos), dejando al objeto en un estado inválido.
 
 En conjunto, declarar los atributos como privados, incluso cuando existan getters y setters, es una práctica fundamental para mantener encapsulación, proteger invariantes y permitir que la clase evolucione sin romper su contrato público.
+
+### Anotación:
+Si los hago públicos:
+* Para poder garantizar invariantes de clase.
+* Para poder cambiar la representación interna.
+* Convención es: atributos siempre privados y método de clase
 
 
 
@@ -437,6 +573,11 @@ Una clase inmutable tiene varias **ventajas** importantes. En primer lugar, simp
 
 En conjunto, la inmutabilidad reduce el riesgo de estados inconsistentes, elimina muchos problemas de sincronización y hace que la lógica de un programa sea más robusta y fácil de mantener. Por ello, aunque no siempre es apropiada, resulta muy útil en modelos matemáticos, valores simples, objetos compartidos y programación funcional integrada en lenguajes orientados a objetos.
 
+### Anotación:
+* **Inmutable**: su estado no cambia.
+* **Modificador**: cualquier método que cambia el estado interno, por ejemplo, un setter.
+Las clases inmutables tienen ventajas: no hacer clases mutables por defecto.
+
 
 
 ## 18. ¿Es recomendable incluir métodos "setter" siempre y como convención?
@@ -449,6 +590,9 @@ Además, la ausencia de setters facilita crear **clases inmutables**, que ofrece
 
 En resumen, los setters **no deben añadirse por convención**, sino **solo cuando sean necesarios** y encajen con el diseño de la clase. La encapsulación, las invariantes y la claridad de intención deben guiar la decisión, no una regla automática.
 
+### Anotación:
+No, porque sino serían siempre clases mutables.
+
 
 
 ## 19. ¿La clase `String` en Java es mutable o inmutable? ¿Qué ocurre al concatenar dos cadenas? ¿Qué debemos hacer si vamos a hacer una operación que implique concatenar muchas veces para construir paso a paso una cadena muy larga?
@@ -460,6 +604,9 @@ Cuando se **concatenan dos cadenas**, por ejemplo con `s1 + s2`, Java crea inter
 Si se necesita **construir una cadena muy larga paso a paso**, lo recomendable es usar **`StringBuilder`** (o `StringBuffer` si se necesita sincronización). `StringBuilder` es **mutable**, lo que permite ir añadiendo fragmentos en memoria sin crear objetos adicionales innecesarios. Al finalizar, se puede convertir el resultado a un `String` mediante `.toString()`. Esta práctica evita costes de tiempo y memoria cuando las concatenaciones son numerosas.
 
 En conjunto, la inmutabilidad de `String` es una ventaja en muchos contextos, pero para operaciones intensivas de construcción de texto conviene utilizar estructuras mutables como `StringBuilder`, que están precisamente diseñadas para ese propósito.
+
+### Anotación:
+La clase String es inmutable.
 
 
 
