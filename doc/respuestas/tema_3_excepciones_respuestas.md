@@ -84,6 +84,57 @@ int main(void) {
 
 Como criterio práctico, conviene elegir **código de estado + parámetro de salida** cuando se desea una API explícita, fácil de probar y sin efectos globales; y **`errno` + sentinela** cuando se alinea con convenciones POSIX/stdlib o se quiere interoperar con utilidades existentes. En ambos casos, la responsabilidad de **informar al usuario** recae en el llamador, que es quien conoce el contexto y el canal de comunicación apropiado.
 
+**Anotaciones:**
+
+Dos formas:
+### A:
+```c++
+float raiz(float num){
+    if(num < 0){
+        return -1.0;
+    }
+    return sqrt(num);
+}
+
+main(){
+    float num = leerDeTeclado();
+    float resultado = raiz(num);
+
+    if(resultado == -1.0){
+        printf("Error");
+    }
+    else{
+        printf("%d", resultado);
+    }
+}
+```
+
+### B:
+```c++
+float raiz (float num, int *error){
+    if(num < 0){
+        *error = 1;
+        return 0;
+    }
+    else{
+        *error = 0;
+        return sqrt(num);
+    }
+}
+
+main(){
+    int error = 0;
+    float num = leerDeTeclado();
+    float resultado = raiz(num, &error);
+    if(error != 0){
+        printf("Error");
+    }
+    else{
+        printf("%d", resultado);
+    }
+}
+```
+
 
 
 ## 2. Brevemente ¿Qué es una **"excepción"**? ¿Con qué objetivo las usa un programador cuando implementa funciones o cuando las llama?
@@ -95,6 +146,11 @@ El objetivo principal al usarlas al **implementar funciones** es disponer de una
 Desde el punto de vista de quien **llama a la función**, las excepciones permiten encapsular toda la lógica de tratamiento de fallos en bloques bien definidos (`try/catch`). De ese modo, es posible agrupar y gestionar varios tipos de errores de forma ordenada y en un único lugar, lo que mejora la legibilidad y facilita el mantenimiento del código. Además, la propagación automática de las excepciones permite que el error sea atendido por el nivel adecuado de la aplicación, en lugar de obligar a cada función intermedia a reenviar manualmente códigos de error.
 
 En conjunto, el uso de excepciones proporciona una forma más expresiva y menos propensa a errores para tratar situaciones excepcionales, comparada con las técnicas clásicas de retorno de valores o uso de banderas globales.
+
+**Anotaciones:**
+* Excepciones -> en situaciones atípicas
+* Cuando las implementamos -> nos permite indicar más claramente el error.
+* Cuando las llamamos -> facilita la lógica normal de la reacción o manejo de las situaciones complejas.
 
 
 
@@ -138,6 +194,33 @@ public class Calculadora {
 ```
 
 Si se prefiere una variante con excepción *checked* para forzar el manejo en tiempo de compilación, bastaría con declarar y lanzar, por ejemplo, `class NumeroNegativoException extends Exception` y firmar el método como `public static double raiz(double x) throws NumeroNegativoException`. El `main` cambiaría únicamente el tipo de excepción en el `catch` (o añadiría un `catch` adicional), manteniendo el mismo control externo y la separación de responsabilidades.
+
+**Anotación:**
+
+```java
+class Calculadora{
+    public static double raiz(double num){
+        if(num < 0.0){
+            throw new IlegalArgumentException("num negativo.");
+        }
+        else{
+            return Math.sqrt(num);
+        }
+    }
+}
+
+class App{
+    public static void main(String[] args){
+        double num = leerTeclado();
+        try{
+            double resultado = Calculadora.raiz(num);
+            sout(resultado);
+        }catch(IlegalArgumentException e){
+            sout("Número negativo.");
+        }
+    }
+}
+```
 
 
 
@@ -188,6 +271,12 @@ La pieza más valiosa es la **traza de pila (stack trace)**. Cada excepción lle
 Además, una excepción empaqueta de forma encapsulada un **mensaje descriptivo** y un **tipo concreto** (su clase). El manejador puede distinguir de manera clara qué tipo de error se produjo sin analizar códigos numéricos ni condicionar todo el programa con valores especiales. Esto facilita la escritura de manejadores selectivos (`catch` por tipo), mejora la expresividad y permite una jerarquía de errores coherente. En el ejemplo de la raíz cuadrada, el manejador recibe una `IllegalArgumentException` con el mensaje y con la traza completa, lo que le permite tanto informar al usuario como registrar el problema sin necesidad de lógica adicional.
 
 En conjunto, la **traza de pila**, el **tipo de la excepción** y el **mensaje encapsulado** constituyen un paquete de información esencial que se transmite de forma automática, segura y sin pérdida entre el punto del error y el manejador. Esta capacidad es una de las mayores ventajas del enfoque orientado a objetos frente al tratamiento manual de errores en C.
+
+**Anotaciones:**
+La información esencial que lleva cualquier objeto excepción puede ser:
+* Un mensaje (getMessage()).
+* La traza de la pila.
+* Opcionalmente, la causa es otra excepción que es la 
 
 
 
