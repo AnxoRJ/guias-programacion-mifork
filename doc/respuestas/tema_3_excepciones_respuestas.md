@@ -275,8 +275,8 @@ En conjunto, la **traza de pila**, el **tipo de la excepción** y el **mensaje e
 **Anotaciones:**
 La información esencial que lleva cualquier objeto excepción puede ser:
 * Un mensaje (getMessage()).
-* La traza de la pila.
-* Opcionalmente, la causa es otra excepción que es la 
+* La traza de la pila, vale para depurar.
+* Opcionalmente, una "causa".
 
 
 
@@ -300,6 +300,13 @@ try {
 ```
 
 Aquí, si `raiz` lanza `IllegalArgumentException`, se ejecuta únicamente el **primer** `catch`. El segundo no se evalúa porque la excepción ya ha sido manejada. Esta estructura permite un control fino y ordenado de errores, especialmente útil cuando se quiere distinguir entre causas específicas y situaciones más generales.
+
+
+**Anotaciones:**
+ Sí que se puede tener más de uno:
+* Solo se ejecuta uno.
+* Se van comprobando por orden hasta el primero que "encaje".
+* Se deben poner de más específico a más general (sino se ejecutará el primero que encaje).
 
 
 
@@ -365,6 +372,9 @@ public class DemoTryFinally {
 
 En código moderno, también resulta idiomático usar **try-with-resources** (`try (var r = ...) { ... }`), que cierra recursos automáticamente y simplifica el `finally`. Aun así, el concepto clave es el mismo: el **código de limpieza va en `finally`** (o implícitamente en try-with-resources) para garantizar la liberación de recursos incluso cuando el flujo normal se rompe por una excepción.
 
+**Anotación:**
+El bloque finally se ejecuta siempre que se ejecute el bloque try.
+
 
 
 ## 10. En Java, el bloque `finally` puede ir sin `catch`? ¿Se ejecuta siempre tanto si ocurre como si no ocurre una excepción? ¿Y si hay un `return` en medio del `try`?
@@ -390,6 +400,11 @@ static int demoReturn(boolean devolverAntes) {
 
 En este método, el `println` del `finally` se ejecuta tanto cuando se hace `return 1`, como cuando se captura la excepción y se hace `return 2`, como cuando no hay `catch` y la excepción se propaga. Nótese que si el propio `finally` lanza otra excepción o hace su propio `return`, **anulará** el flujo anterior (lo cual es desaconsejable por ocultar la causa original). Para código moderno, `try-with-resources` es preferible cuando se trabaja con recursos *AutoCloseable*, ya que expresa la misma garantía de limpieza de forma más concisa.
 
+**Anotaciones:**
+Si que puede ir sin catch:
+* Se ejecuta, puesto que es finally.
+* Si hubo excepción, como no tenemos catch, se propaga.
+
 
 
 ## 11. En Java, qué son las excepciones **"controladas"** y las **"no controladas"**? ¿Qué papel juega `RuntimeException`? Pon un ejemplo de excepciones típicas controladas y no controladas que incluso nosotros mismos podríamos usar. Haz dos listas con 3 o 4 ejemplos de situación donde se suele preferir una excepción controlada y donde se suele preferir una excepción no controlada.
@@ -411,6 +426,10 @@ Ejemplos típicos de **controladas** (checked) que se usan a diario incluyen `IO
 *   **Argumentos inválidos** o **estado ilegal** detectados en métodos públicos (`IllegalArgumentException`, `IllegalStateException`).
 *   Fallos que **no tienen recuperación significativa** en el punto de llamada (p. ej., `NullPointerException`, `IndexOutOfBoundsException`).
 *   Para **evitar ruido ceremonial** cuando obligar `try/catch` haría el código menos claro sin aportar un plan real de recuperación.
+
+**Anotaciones:**
+* **No controladas:** No necesita un bloque try-catch/throws. Ejemplos: RuntimeException (IllegalArgumentException, NullPointerException, ...).
+* **Controladas:** Es necesario usar un try-catch/throws. Ejemplo: IOException (AccesDeniedException), ...
 
 
 
@@ -514,6 +533,11 @@ String t = servicio.obtenerToken();  // Se deja propagar o se gestiona en un man
 ```
 
 En resumen: se **puede** poner *unchecked* en `throws`, pero no **debe** esperarse que fuerce `try-catch`. Se usa para **expresar el contrato** y para guiar a quien llama; y se captura solo cuando exista una **estrategia de recuperación real** o se necesite **traducción/registro** en un punto apropiado del sistema.
+
+**Anotaciones:**
+* Se puede, pero el compilador no va a obligar al bloque try-catch.
+* No es habitual.
+* A veces se ponen para documentación.
 
 
 
@@ -636,6 +660,27 @@ double raiz(double x) {
 
 En resumen: **lanzar otra excepción** desde un `catch` es útil para **encapsular** y **comunicar** mejor el fallo al dominio (traducción), mientras que **re-lanzar la misma** sirve para **no ocultar** errores tras realizar tareas locales valiosas (registro, limpieza) cuando el método **no puede** resolver el problema. En ambos casos, conviene **preservar la causa** (ya sea con `throw e;` o con `new ... (mensaje, e)`) para mantener diagnósticos fiables.
 
+**Anotación:**
+Si que tiene sentido:
+* Relanzar la misma exception.
+```java
+try{
+
+}
+catch(NumberFormatException e){
+    throw e;
+}
+```
+* Lanzar otra excepción totalmente nueva.
+```java
+try{
+
+}
+catch(IOException e){
+    throw new RunTimeException("Excepción", e);
+}
+```
+
 
 
 ## 17. ¿En qué consiste que una excepción sea la **"causa"** de otra excepción? Pon un ejemplo en Java, donde capturemos una excepción de bajo nivel y la encapsulemos en otra personalizada de alto nivel. Cuando una excepción sale por pantalla y tiene una causa, ¿se ve?
@@ -691,4 +736,7 @@ public class ServicioPerfiles {
 
 En este patrón, la capa inferior aporta el detalle técnico y la superior mantiene un contrato estable y expresivo. Al mismo tiempo, la traza impresa revela toda la cadena (`Caused by`) para depuración, evitando perder información diagnóstica mientras se conserva la separación de responsabilidades.
 
-
+**Anotaciones:**
+Causa de excepción:
+* Se ve cuando la excepción se muestra por pantalla.
+* Se puede obtener con el método getCause().
