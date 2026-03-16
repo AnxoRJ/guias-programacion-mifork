@@ -64,6 +64,26 @@ int main(void) {
 
 Este diseño permite extender la composición fácilmente: por ejemplo, una polilínea “tiene-varios” puntos (un arreglo dinámico o estático de `struct Punto`), y su longitud total sería la suma de las distancias entre puntos consecutivos. En C, además, puede pasarse por valor como arriba (cómodo y claro) o por puntero constante (`const struct Punto*`) si se desea evitar copias en estructuras mayores; con puntos pequeños de tipo `double`, el coste de copiar suele ser despreciable y la versión por valor mantiene la interfaz simple.
 
+**Anotación:**
+```c
+struct Punto{
+    double x;
+    double y;
+}
+
+struct Linea{
+    struct Punto p1;
+    struct Punto p2
+}
+
+double distancia(struct Punto p1, struct Punto p2){
+
+}
+
+double longitud(struct Linea l){
+    return distancia(l.p1, l.p2);
+}
+```
 
 
 ## 2. Ahora transforma ese ejemplo a orientación a objetos con Java, para tener un primer ejemplo de **composición** en orientación a objetos. Crea una clase `Punto`, y una clase `Linea`. La clase `Punto` debe tener un método para calcular distancia a otro `Punto` y `Linea` debe tener un método para calcular su longitud. Gracias a la ocultación de información, supera a C, garantizando que los puntos sean inmutables, al igual que la línea, que una vez creada, no queremos que se modifique de qué a qué puntos va dicha línea.  
@@ -132,6 +152,35 @@ class Demo {
 
 Este diseño puede ampliarse de forma natural: por ejemplo, una `Polilinea` inmutable podría componer una lista inmutable de `Punto` y calcular su longitud sumando distancias consecutivas. Si en el futuro se quisieran optimizaciones (p. ej., *caching* de la longitud), podrían añadirse campos `transient` o cálculos perezosos sin romper la inmutabilidad observable. La clave es mantener los estados válidos únicamente desde los constructores y exponer solo operaciones que no mutan el estado interno.
 
+**Anotación:**
+```java
+class Punto{
+    private double x;
+    private double y;
+
+    public Punto(double x, double y){
+
+    }
+
+    public distancia(Punto p2){
+        return Math.sqrt(this.x - p2.x ...);
+    }
+}
+
+class Linea{
+    private Punto p1;
+    private Punto p2;
+
+    public Linea(Punto p1, Punto p2){
+
+    }
+
+    public longitud(){
+        return this.p1.distancia(this.p2);
+    }
+}
+```
+
 
 
 ## 3. ¿Qué significa la **multiplicidad** en la composición? En el ejemplo anterior, ¿cuál es la multiplicidad entre `Linea` y `Punto`? Indícalo expresando la multiplicidad en ambas direcciones, de `Linea` a `Punto` y de `Punto` a `Linea`.
@@ -144,10 +193,11 @@ Visto desde el otro lado, cada `Punto` puede participar en **ninguna, una o vari
 
 Resumiendo la multiplicidad en ambas direcciones:
 
-*   **De `Linea` a `Punto`:** **2** (cada línea tiene exactamente dos puntos).
-*   **De `Punto` a `Linea`:** **0..**\* (un punto puede no formar parte de ninguna línea o ser extremo de varias).
+*   **De `Linea` a `Punto`:** **2 o 2.2** (una línea se relaciona con dos Puntos y como máximo con dos Puntos).
+*   **De `Punto` a `Linea`:** **0..**\* (un punto se relaciona como mínimo con cero Líneas y como máximo con muchas Lineas).
 
 Si en un futuro se modelaran polilíneas o figuras más complejas, estas multiplicidades cambiarían: una polilínea tendría una multiplicidad 2..\* hacia `Punto`, mientras que un punto seguiría pudiendo pertenecer a muchas estructuras superiores.
+
 
 
 
@@ -161,6 +211,14 @@ Desde el punto de vista terminológico, la composición débil suele denominarse
 
 Como consecuencia práctica, la elección entre composición fuerte y débil influye en cómo se construyen, validan y gestionan los objetos. Un diseño orientado a composición fuerte tiende a favorecer inmutabilidad y control claro de estados, mientras que la composición débil encaja mejor con objetos compartibles, reutilizables o gestionados mediante servicios externos. En ambos casos, la multiplicidad y la semántica del dominio guían la elección adecuada.
 
+**Anotación:**
+* **Fuerte:** el contenedor (P. ej. Linea) es el que crea los objetos que contiene (P.ej. Punto) y estos no van más allá del contenedor.
+* * El ciclo de vida del contenido está vinculado al contenedor.
+
+* **Débil:** el contenedor y contenido tienen ciclos de vida independientes(P.ej. los objetos Punto pueden vivir sin estar en objeto Linea).
+
+Se representan graficamente con un rombo oscuro y vacio respectivamente.
+
 
 
 ## 5. Cuando una clase usa a otra al recibirla o devolverla como parámetro en algún método, al hacer `new` dentro de un método, o al usarlas como variables locales, ¿hablamos de composición o de **"dependencia"**?
@@ -172,6 +230,21 @@ La composición, en cambio, implica que una clase contiene y gestiona objetos qu
 En términos de diseño, reconocer una dependencia es útil para mantener clases poco acopladas y con responsabilidades claras. Una clase puede depender de muchas otras sin que ello implique que su estructura de datos incluya instancias de ellas. Por ejemplo, un método que recibe un `Punto` para calcular algo puntual establece una dependencia, pero no una composición, porque el `Punto` no forma parte del estado interno del objeto ni su ciclo de vida está controlado por él.
 
 En resumen, cuando una clase interactúa con otra solo durante la ejecución de métodos —como parámetros, valores de retorno, variables locales o instancias temporales— se habla estrictamente de **dependencia**, no de composición.
+
+**Anotación:**
+Ejemplo de dependencia, no de composición.
+
+```java
+class Punto{
+    public String toString(){
+        StringBuider sb = new StringBuilder();
+    }
+}
+class OperadorFichero{
+    public static String leeFichero(Punto p)
+}
+```
+Punto depende de String y StringBuilder.
 
 
 
@@ -274,6 +347,21 @@ public final class LineaDebil {
 
 **Diferencia práctica:** en `LineaFuerte`, si se crea con `new LineaFuerte(p1, p2)`, los objetos internos son *copias* de `p1` y `p2`; por tanto, no se comparten con otras líneas y `getA()/getB()` devuelven **nuevas** instancias cada vez. En `LineaDebil`, en cambio, `new LineaDebil(p1, p2)` guarda exactamente `p1` y `p2`; el mismo `Punto` puede formar parte de muchas líneas y los *getters* devuelven esas referencias, reflejando que el ciclo de vida de los puntos no está ligado al de la línea.
 
+**Anotación:**
+
+### **Composición fuerte: **
+```java
+class Linea{
+    private Punto1;
+    private Punto2;
+
+    public Linea(double x1, double x2, double y1, double y2){
+        this.p1 = new Punto(x1, y1);
+        this.p2 = new Punto(x2, y2);
+    }
+}
+```
+
 
 
 ## 7. En Java, en la composición fuerte, ¿cuando el contenedor destruye los objetos? No se observa que `Linea` destruya los `Punto` explícitamente, ¿Por qué?
@@ -285,6 +373,10 @@ En términos prácticos, la destrucción llega cuando **no quedan referencias ac
 Este comportamiento explica por qué no se escribe código en `Linea` para eliminar manualmente sus puntos. En Java, el ciclo de vida se maneja mediante **alcance de referencias**, no mediante llamadas explícitas a destructores. La composición fuerte se expresa entonces en términos conceptuales: el contenedor es el único dueño de sus partes, y solo él mantiene referencias a ellas. Una vez que el contenedor ya no existe lógicamente (porque no hay referencias hacia él), sus partes se vuelven automáticamente inaccesibles.
 
 En definitiva, en Java la relación de composición fuerte no se implementa mediante destrucción manual, sino mediante **encapsulación de referencias** y **inaccesibilidad automática**. El GC se encarga del resto, liberando memoria cuando ya no puede alcanzarse ni el contenedor ni sus componentes. Así, el diseño expresa la dependencia vital, mientras que el lenguaje evita la gestión manual del ciclo de vida.
+
+**Anotación:**
+
+En java, la vida de Punto termina cuando es inaccesible, y en el ejemplo, ocurre cuando Linea deja de serlo a su vez. Por tanto, cuando Linea "es basura", también lo serán sus puntos y serán eliminando de memoria por el recolector de basura.
 
 
 
@@ -446,6 +538,68 @@ class Demo {
 
 Este diseño materializa la **agregación** (composición débil): el departamento no “posee” los `Profesor` (no clona ni destruye), solo mantiene referencias, y hace cumplir la invariante de que **siempre** existe un director perteneciente a su lista. Las operaciones de alta/baja y cambio de director preservan consistentemente dicho contrato mediante excepciones cuando procede.
 
+**Anotación:**
+
+```java
+public class Profesor{
+
+}
+
+public class Departamento{
+
+    //Composición debil 1:
+    //Un departamento: como minimo 0 y como máximo muchos Profesor
+    //Un profesor: como mínimo 0 y como máximo muchos Departamento
+    private Profesor[] profesores = new Profesor[50];
+    private int numProfesor = 0;
+
+    //Composición débil 2:
+    //Un departamento tiene como mínimo 1 y como máximo 1 Profesor
+    //Un Profesor puede ser director mínimo 0 y máximo muchos Departamento.
+
+    private Profesor director;
+
+    public Departamento(Profesor director){
+        //0. Si director es null, lanzamos IllegalArgumentException.
+        //1. Añadimos el director al conjunto de profesores.
+        //2. Establecemos ese profesor como director.
+    }
+
+    public int getNumProfesor(){
+        return this.numProfesor;
+    }
+
+    public Profesor getProfesor(int pos){
+        //0. Validamos pos, y si no valida, lanzar IAE.
+
+        return this.profesores[pos];
+    }
+
+    public void addProfesor(Profesor p){
+        //0. Si ya no hay más sitio, lanzar IAE o AIOBE (ArrayIndexOutOfBoundsException).
+    }
+
+    public void eliminarProfesor(int pos){
+        //0. Si pos no está en el rango correcto (0 - numProfesor), lanzar IAE.
+        //1. Si el profesor en pos es el director, lanzar IAE.
+    }
+
+    public void cambiarDirector(Profesor nuevoDirector){
+        //0. Si nuevoDirector es null, lanzar IAE.
+        //1. Si nuevoDirector no lo encuentro (bucle de busqueda), lanzo IAE, diciendo que hay que meterlo en el departamento primero.
+    }
+
+    public Profesor getDirector(){
+        return this.director;
+    }
+
+}
+```
+
+* Hay dos composiciones débiles.
+* No se expone el array al exterior (imposible garantizar invariante de clase).
+* En los métodos que gestionan el departamento se controla que no se viole la invariante de clase.
+
 
 
 ## 9. En Java, existen también `List`, cambia y muestra cómo sería el código anterior empleando `List` en vez de arrays primitivos. ¿Qué parte del código original te has ahorrado? Además, fíjate en el método `getProfesor(int pos)`: si en su lugar existiera un método que devolviera todos los profesores a la vez, ¿qué problema tendría devolver directamente la lista interna? ¿Cómo lo resolverías?
@@ -586,6 +740,84 @@ class Demo {
 ```
 
 En resumen, con `List` se simplifica notablemente la implementación al delegar en la colección las operaciones de **acceso por índice**, **eliminación y desplazamiento**, y **contaje de elementos**. Para un método que devuelva “todos los profesores”, **no** debe retornarse la lista interna: o bien se entrega una **vista inmodificable** para lectura segura, o bien una **copia defensiva** si se desea aislar por completo la estructura interna y ofrecer una instantánea independiente.
+
+**Anotación:**
+
+```java
+public class Profesor{
+
+}
+
+public class Departamento{
+
+    //Composición debil 1:
+    //Un departamento: como minimo 0 y como máximo muchos Profesor
+    //Un profesor: como mínimo 0 y como máximo muchos Departamento
+    private Profesor[] profesores = new Profesor[50];
+    private int numProfesor = 0;
+
+    //Composición débil 2:
+    //Un departamento tiene como mínimo 1 y como máximo 1 Profesor
+    //Un Profesor puede ser director mínimo 0 y máximo muchos Departamento.
+
+    private Profesor director;
+
+    public Departamento(Profesor director){
+        //0. Si director es null, lanzamos IllegalArgumentException.
+        //1. Añadimos el director al conjunto de profesores.
+        //2. Establecemos ese profesor como director.
+    }
+
+    public int getNumProfesor(){
+        return this.numProfesor;
+    }
+
+    public Profesor getProfesor(int pos){
+        //0. Validamos pos, y si no valida, lanzar IAE.
+
+        return this.profesores[pos];
+    }
+
+    public void addProfesor(Profesor p){
+        //0. Si ya no hay más sitio, lanzar IAE o AIOBE (ArrayIndexOutOfBoundsException).
+    }
+
+    public void eliminarProfesor(int pos){
+        //0. Si pos no está en el rango correcto (0 - numProfesor), lanzar IAE.
+        //1. Si el profesor en pos es el director, lanzar IAE.
+    }
+
+    public void cambiarDirector(Profesor nuevoDirector){
+        //0. Si nuevoDirector es null, lanzar IAE.
+        //1. Si nuevoDirector no lo encuentro (bucle de busqueda), lanzo IAE, diciendo que hay que meterlo en el departamento primero.
+    }
+
+    public Profesor getDirector(){
+        return this.director;
+    }
+
+    public List<Profesor> getProfesores(){
+        //No usar: return this.profesores;
+
+        //Solución clásica, con copia (penalización pequeña en rendimiento).
+        return new ArrayList<>(this.profesores);
+        
+        //Solución alternativa sin copia:
+        return Collections.unmodificableList(this.profesores);
+
+        //Que problema hay? -> La lista es mutable, perdemos el control sobre la invariante de clase.
+
+        //Si insisto en que me gusta esta interfaz, pero quiero garantizar que solo se use para recorrerlos y no modificar, puedo:
+        //  1. Devolver una copia de la lista.
+        //  2. Devolver un envoltorio no mutable.
+    }
+
+}
+```
+
+Con List<Profesor>:
+* 1. No cambia la interfaz pública.
+* 2. Es más facil implementar algunos métodos, delegando en métodos de List. 
 
 
 
