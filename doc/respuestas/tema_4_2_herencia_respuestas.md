@@ -79,6 +79,39 @@ public class Main {
 }
 ```
 
+**Anotación:**
+* Comparación (tiene un/varios)
+* Herencia (es un)
+
+1. Compatibilidad de tipos (Soldado s = new Artillero("pepe"))
+2. Herencia de estado(atributos) y comportamiento(métodos)
+
+```java
+public class Soldado{
+    private String nombre;
+
+    public Soldado(String nombre){
+        this.nombre = nombre;
+    }
+
+    public void saludar(){
+        System.out.println()
+    }
+}
+
+public class Artillero extends Soldado{
+    private int numCohetes;
+
+    public Artillero(String nombre, int numCohetes){
+        super(nombre);
+        this.numCohetes = numCohetes;
+    }
+    public int getNumCohetes(){
+        return this.numCohetes;
+    }
+}
+```
+
 
 
 ## 2. Al crear los soldados concretos, ¿cuántos constructores se ejecutan y en qué orden? ¿Qué significa `super` dentro de un constructor? Si la clase base no tiene visible el constructor sin parámetros, ¿debo llamar a `super` siempre? 
@@ -90,6 +123,33 @@ La palabra clave **`super` dentro de un constructor** sirve para invocar explíc
 Si la clase base **no tiene visible un constructor sin parámetros**, entonces **es obligatorio llamar a `super` de forma explícita**. En caso contrario, el código no compilará. Esto se debe a que, si no se escribe `super(...)`, Java intenta insertar implícitamente una llamada a `super()` sin argumentos; si ese constructor no existe o no es accesible, se produce un error de compilación. Por tanto, en diseños donde la clase base requiere información mínima para construirse, las subclases están forzadas a proporcionar esa información al invocar el constructor adecuado.
 
 En cambio, si la clase base **sí dispone de un constructor sin parámetros accesible**, la llamada a `super()` es opcional, ya que el compilador la inserta automáticamente. Aun así, es habitual escribirla explícitamente cuando se quiere dejar claro el flujo de inicialización o cuando se desea llamar a un constructor concreto de la superclase con argumentos. Esta regla refuerza la idea de que la herencia no solo reutiliza código, sino que también impone un orden y una disciplina en la construcción de los objetos.
+
+**Anotación:**
+```java
+public class Soldado{
+    private String nombre;
+
+    public Soldado(String nombre){
+        this.nombre = nombre;
+    }
+
+    public void saludar(){
+        System.out.println()
+    }
+}
+
+public class Artillero extends Soldado{
+    private int numCohetes;
+
+    public Artillero(String nombre, int numCohetes){
+        super(nombre);
+        this.numCohetes = numCohetes;
+    }
+    public int getNumCohetes(){
+        return this.numCohetes;
+    }
+}
+```
 
 
 ## 3. Respecto a los objetos de subclases en memoria, los atributos privados de la superclase, ¿forman parte de una instancia de la subclase en memoria? En caso afirmativo ¿implica que se puedan usar desde el código de la subclase? Explícalo con el ejemplo de `Soldado` y alguna de sus subclases.
@@ -134,6 +194,7 @@ public class Artillero extends Soldado {
 ```
 
 En resumen, **los atributos privados de la superclase sí existen dentro de las instancias de las subclases**, pero **no son accesibles directamente desde el código de dichas subclases**. Esta separación refuerza uno de los principios fundamentales de la orientación a objetos: la encapsulación, asegurando que cada clase controla el acceso a su propio estado incluso cuando participa en una relación de herencia.
+
 
 
 ## 4. ¿Qué implica en términos de **extensibilidad** de código el hecho de que sean compatibles a nivel de tipos? Ilustra esto añadiendo un nuevo tipo de `Soldado` y demostrando que el código para pedir el saludo a todos los soldados no se modifica.
