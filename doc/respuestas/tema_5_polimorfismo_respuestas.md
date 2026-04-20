@@ -22,6 +22,11 @@ El polimorfismo sirve principalmente para **desacoplar** el código y hacerlo m�
 
 La **sobreescritura de métodos** es el mecanismo que hace posible el polimorfismo dinámico. Consiste en que una subclase proporcione su propia implementación de un método definido en la clase base, respetando la misma firma (nombre, parámetros y tipo de retorno compatible). Cuando un método está sobrescrito y se invoca a través de una referencia del tipo de la superclase, Java decide en tiempo de ejecución qué versión del método ejecutar, en función del tipo real del objeto. De este modo, la sobreescritura permite especializar comportamientos heredados y es una pieza clave para aprovechar correctamente el polimorfismo en el diseño orientado a objetos.
 
+**Anotación:**
+* Polimorfismo:
+* * Objetivo: faciitar la extensión de los programas.
+* * Facilita que esta extensión se haga creando código nuevo frente a editar código existente.
+
 
 
 ## 2. ¿En qué consiste la **"ligadura dinámica"** o **"enlace tardío"**? ¿qué relación tiene con el polimorfismo? ¿hay que indicarlos explícitamente al programar o depende esto del lenguaje? Compara C++ y Java. Indicalo después también para Python.
@@ -80,6 +85,61 @@ public class Main {
 ```
 
 En este ejemplo, aunque todas las referencias del array son de tipo `Soldado`, la llamada a `saludar` ejecuta comportamientos distintos. Esto ocurre porque el método está enlazado dinámicamente y permite que cada subclase defina su propia respuesta, mostrando de forma clara el funcionamiento del polimorfismo en Java.
+
+**Anotación:**
+
+```java
+public class Soldado{
+    public void saludar;
+
+    public void saluda(){
+        sout("saludo 1")
+    }
+}
+
+private class PruebaPolimorfismo{
+    main{
+        Soldado[] soldados = new Soldado[2];
+
+        Soldados [0] = new Artillero();
+        Soldados [1] = new Zapador();
+
+        for(Soldado soldado: soldados){
+            soldado.saluda();
+        }
+    }
+}
+
+public class Zapador extends Soldado{
+    public void saluda(){
+        sout("Saludo zapador");
+    }
+}
+
+private class PruebaPolimorfismo{
+    main{
+        Soldado[] soldados = new Soldado[2];
+
+        Soldados [0] = new Artillero();
+        Soldados [1] = new Zapador();
+
+        pasarRevista.soldados();
+    }
+}
+
+public static void pasarRevista(){
+    for(Soldado soldado: soldados){
+        soldado.saluda();
+    }
+}
+
+public class Zapador extends Soldado{
+    super.saluda();
+    public void saluda(){
+        sout("Saludo zapador");
+    }
+}
+```
 
 
 
@@ -148,7 +208,7 @@ En Java, la palabra clave **`abstract`** se coloca tanto en la **declaración de
 ```java
 public abstract class Soldado {
 
-    public void saludar() {
+    public void saluda() {
         System.out.println("El soldado saluda de forma genérica.");
     }
 
@@ -190,6 +250,10 @@ La relación con el **polimorfismo** es directa: marcar métodos o clases como `
 
 Un ejemplo muy conocido de **clase `final` en la API estándar de Java** es `String`. Esta clase no puede heredarse, lo que garantiza que su comportamiento sea inmutable y seguro, especialmente en contextos como la gestión de cadenas literales, la seguridad y el uso en estructuras como mapas o conjuntos. Otros ejemplos frecuentes son las clases envoltorio (`Integer`, `Double`, `Boolean`, etc.), que también son `final` para asegurar un comportamiento consistente y predecible dentro del núcleo del lenguaje.
 
+**Anotación:**
+* `final` en clases: prohibe heredar.
+* `final` en métodos: prohibe sobreescribir.
+
 
 ## 9. En Java, qué son las **"interfaces"**? ¿Son como clases abstractas? ¿Una clase puede implementar más de una interfaz?
 
@@ -200,6 +264,23 @@ Las interfaces **se parecen a las clases abstractas**, pero no son lo mismo. Amb
 Una diferencia clave es que **una clase puede implementar más de una interfaz**, algo que Java no permite con las clases (no existe herencia múltiple de clases). Esto resuelve muchos problemas de diseño que en otros lenguajes se abordarían con herencia múltiple. Mediante interfaces, una clase puede combinar comportamientos esperados desde distintos puntos de vista, manteniendo un diseño flexible y desacoplado.
 
 En términos de polimorfismo, las interfaces son una herramienta fundamental. Permiten escribir código que dependa de **qué se puede hacer** un objeto, y no de **qué es exactamente**, facilitando la extensibilidad y el uso de componentes intercambiables. Por ello, en Java moderno se fomenta a menudo “programar contra interfaces y no contra implementaciones”, especialmente en APIs, bibliotecas y diseños orientados a mantenimiento a largo plazo.
+
+**Anotación:**
+* Todos los métodos son abstractos, es decir, sin código (a partir de cierta versión de Java, deja meter una implementación "default").
+* No tienen estado
+* Una clase puede implementar más de una interfaz.
+
+```java
+public interface EntradaSalida{
+    public String leerEntrada();
+
+    public void escribirEnSalida(String salida);
+}
+
+public class TecladoPantalla implements EntradaSalida{
+
+}
+```
 
 
 
@@ -280,6 +361,69 @@ public class Linea {
 ```
 
 Así, `Linea` puede calcular correctamente su longitud independientemente de si trabaja con puntos 2D o 3D. Este ejemplo muestra cómo el polimorfismo permite diseñar código genérico y extensible, aun utilizando comprobaciones dinámicas (`instanceof`) cuando se desea mantener compatibilidad estricta entre subtipos concretos.
+
+**Anotación:**
+
+```java
+public abstract class Punto{
+    public abstract double calcularDistanciaA();
+}
+
+public class Punto2D extends Punto{
+    private double x, y;
+
+    public Punto2D(double x, double y){
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public double calcularDistanciaA(Punto otro){
+        if(otro instanceof Punto2D){
+            return Math.sqrt(Math.pow(this.x - otro.x, 2) + Math.pow(this.y - otro.y, 2));
+        }else{
+            throw new IllegalArgumentException("Diferente dimensión.");
+        }
+    }
+}
+
+public class Punto3D extends Punto{
+    private double x, y, z;
+
+    public Punto2D(double x, double y){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    @Override
+    public double calcularDistanciaA(Punto otro){
+        if(otro instanceof Punto3D){
+            return Math.sqrt(Math.pow(this.x - otro.x, 2) + Math.pow(this.y - otro.y, 2) + Math.pow(this.z - otro.z, 2));
+        }else{
+            throw new IllegalArgumentException("Diferente dimensión.");
+        }
+    }
+}
+
+public class Linea{
+    private Punto puntoInicial, puntoFinal;
+
+    public Linea(Punto puntoInicial, Punto puntoFinal){
+        this.puntoInicial = puntoInicial;
+        this.puntoFinal = puntoFinal;
+    }
+
+    public double calcularLongitud(){
+        return this.puntoInicial.calcularDistanciaA(this.puntoFinal);
+    }
+
+    main{
+        Linea l2d = new Linea(new Punto2D(4, 5), new Punto2D(7, 8));
+        Linea l3d = new Linea(new Punto2D(4, 5, 3), new Punto2D(7, 8, 4));
+    }
+}
+```
 
 
 
