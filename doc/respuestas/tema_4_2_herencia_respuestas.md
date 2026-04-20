@@ -316,6 +316,10 @@ En **Java**, la clase base de todas las clases es `java.lang.Object`. Si una cla
 
 Esta decisión tiene consecuencias importantes: permite tratar cualquier instancia como un `Object`, almacenar objetos heterogéneos en estructuras comunes y definir comportamientos generales. Al mismo tiempo, refuerza la uniformidad del lenguaje y facilita el uso de la reflexión, la gestión de colecciones y la interoperabilidad entre librerías. En resumen, en Java **sí existe una clase base universal**, mientras que en otros lenguajes orientados a objetos esto depende del modelo elegido por el propio lenguaje.
 
+**Anotación:**
+C++ no tiene una clase base implícita.
+Java si la tiene: Object.
+
 
 
 ## 8. ¿Qué es la **"herencia múltiple"**? ¿Existe en Java herencia múltiple?
@@ -327,6 +331,10 @@ La existencia y el soporte de la herencia múltiple **depende del lenguaje**. Al
 En **Java no existe herencia múltiple de clases**: una clase solo puede extender (`extends`) de **una única clase base**. Esta decisión elimina de raíz los problemas de ambigüedad y simplifica el modelo de herencia. Sin embargo, Java **sí permite herencia múltiple de interfaces**, lo que significa que una clase puede implementar (`implements`) varias interfaces al mismo tiempo. De este modo, una clase puede comprometerse a varios contratos de comportamiento sin heredar estado, lo que evita los conflictos típicos de la herencia múltiple clásica.
 
 En consecuencia, en Java la combinación de **herencia simple + múltiples interfaces + composición** cubre la mayoría de casos prácticos. Se hereda estado y comportamiento común desde una única superclase, y se amplían capacidades desde varias interfaces, manteniendo un diseño más claro y controlado. Esta restricción no limita la expresividad del lenguaje, sino que orienta hacia diseños más robustos y mantenibles.
+
+**Anotación:**
+* Herencia múltiple -> heredar de más de una clase.
+En Java no existe la herencia múltiple para evitar problemas como la herencia en diamante (en C++ sí).
 
 
 
@@ -382,6 +390,27 @@ public class UsuarioNoEncontradoException extends RuntimeException {
 
 En este ejemplo, la excepción es un objeto completo del sistema: contiene estado propio, referencia a un objeto de dominio y soporte para el encadenamiento de errores. Esto refleja claramente cómo las excepciones, al ser objetos, participan plenamente en el modelo orientado a objetos.
 
+**Anotación:**
+```java
+public class UsuarioNoEncontradoException extends RuntimeException {
+    private final Usuario usuario;
+
+    public UsuarioNoEncontradoException(String mensaje, Usuario usuario) {
+        super(mensaje);
+        this.usuario = usuario;
+    }
+
+    public UsuarioNoEncontradoException(String mensaje, Usuario usuario, Throwable cause) {
+        super(mensaje, cause);
+        this.usuario = usuario;
+    }
+
+    public Usuario getUsuarioNoEncontrado(){
+        return this.usuario;
+    }
+}
+```
+
 
 
 ## 10. Herencia vs. Composición. Se dice que no se debe emplear herencia simplemente por reutilizar código, es decir, que si quiero reutilizar código simplemente, no debo pensar en herencia como primera opción ¿por qué?
@@ -418,6 +447,13 @@ En otras palabras, la herencia permite acceder a una **interfaz ampliada y no si
 
 Por el contrario, la composición mantiene la encapsulación porque la clase reutilizada se trata como una **caja negra**: solo se usa a través de su interfaz pública y no se asumen detalles internos. Por eso se afirma que no es que la herencia sea incorrecta, sino que **debe usarse con cuidado**, entendiendo que implica compartir implementación y, con ello, perder parte del aislamiento que la encapsulación pretende garantizar.
 
+
+## Respecto a las preguntas 10, 11 y 12:
+* No usar herencia solo por reutilizar código.
+* * Debe usarse cuando se necesita la compatibilidad de tipos.
+* Usar herencia implica un fuerte acoplamiento desde la clase derivada hacia la clase base.
+* * La clase derivada depende mucho de la base.
+* * Cambios internos en la clase base podrían llegar a afectar a las derivadas.
 
 
 ## 13. Pongamos un ejemplo de dos alternativas para lo mismo. Tenemos un `Estudiante` y un `Trabajador`, ambos tienen datos en común: el DNI y el nombre. Modelemos esto de dos formas: uno por herencia, con una superclase `Persona`, y otro con composición, con una clase `DatosPersonales`. Se debe recibir una instancia de `DatosPersonales` en el constructor de la clase `Estudiante` y `Trabajador`.
