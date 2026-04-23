@@ -221,6 +221,42 @@ public class Estadistica {
 
 Este ejemplo muestra cómo los parámetros de tipo permiten expresar con claridad la intención del código, mejorar la legibilidad y evitar errores de tipo, manteniendo una solución genérica y reutilizable.
 
+**Anotación:**
+```java
+class Par<P, Q>{
+    private final P primero;
+    private final Q segundo;
+
+    public Par(P primero, Q segundo){
+        this.primero = primero;
+        this.segundo = segundo;
+    }
+
+    public P getPrimero(){
+        return this.primero;
+    }
+
+    public Q getSegundo(){
+        return this.segundo;
+    }
+}
+
+class Estadistica{
+    public static Par<Double, Double> mediaYDesviacionTipica(List<Double> valores){
+        double media = ...
+        double stddev = ...
+
+        return new Par<Double, Double>(media, stddev);
+    }
+}
+
+class Colegio{
+    public static List<Par<Alumno, Double>> obtenerAlumnosYSusNotas(){
+
+    }
+}
+```
+
 
 
 ## 8. En Java, se pueden declarar parámetros de tipo también a nivel de método, no solo a nivel de clase. Pon un ejemplo con un método genérico `seleccionaUno`, que pasados dos objetos del mismo tipo, te devuelva aleatoriamente uno de ellos. Muestra la diferencia de definirlo con dos `Object`, a definirlo con dos parámetros de tipo, en terminos de (i) evitar downcasting y (ii) forzar que ambos objetos sean del mismo tipo. 
@@ -329,6 +365,36 @@ public class Punto<T extends Number> {
 
 Respecto al **type erasure**, en ambos casos el tipo genérico **se elimina tras la compilación**. En la versión genérica, `T` se sustituye por su límite superior, es decir, `Number`. Por tanto, el tipo final generado por el compilador es equivalentemente un `Punto` que trabaja con `Number`, aunque el chequeo estricto de tipos ya se haya realizado en tiempo de compilación. La ventaja de los genéricos no está en el bytecode final, sino en la **seguridad y expresividad añadidas durante la compilación**.
 
+**Anotación:**
+```java
+class Punto<T>{
+    private T x;
+    private T y;
+
+    public T getX(){
+        return this.x;
+    }
+
+    public T getY(){
+        return this.y;
+    }
+
+    public double distanciaAOtroPunto(Punto<T> otro){
+        double dx = this.x - otro.x;
+        double dy = this.y - otro.y;
+
+        return Math.sqrt(dx * dx, dy * dy);
+    }
+
+    public static void main(String[] args){
+        Punto<Integer> puntoEnteros = new Punto<Integer>(4, 5);
+        Punto<Integer> puntoEnteros2 = new Punto<Integer>(8, 2);
+
+        Punto<Double> puntoDouble = new Punto<Double>(4.0, 5.0);
+        Punto<Double> puntoDouble2 = new Punto<Double>(7.6, 5.8);
+    }
+}
+```
 
 
 ## 10. Sobre las soluciones anteriores. Si bien ambas permiten trabajar con distintos tipos de número sin duplicar la clase `Punto`, reflexiona sobre el refuerzo del chequeo de tipos con generics. ¿Permiten ambas crear un punto con una coordenada de tipo entero y la otra coordenada de tipo real? ¿Qué tipo devuelve el `getX` con la solucion sin generics y qué tipo devuelve el que tiene la solución con generics?
