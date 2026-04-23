@@ -450,3 +450,15 @@ public interface FicheroEscribible extends Fichero {
 
 En este diseño, cualquier clase que implemente `FicheroEscribible` estará obligada a implementar **todos los métodos de ambas interfaces**, tanto los heredados (`leerContenido`) como los nuevos. Esto demuestra cómo la herencia múltiple de interfaces permite construir jerarquías de contratos flexibles, favoreciendo el polimorfismo y el desacoplamiento sin recurrir a jerarquías rígidas de clases.
 
+**Anotación:**
+```java
+public interface Fichero{
+    String leer;
+}
+
+public interface FicheroEscribible extends Fichero{
+    public void escribir(String string);
+    public void eliminar();
+}
+```
+
