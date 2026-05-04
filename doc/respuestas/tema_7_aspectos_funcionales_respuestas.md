@@ -88,6 +88,9 @@ public class Principal {
 En ambos casos, la función lambda permite encapsular una operación concreta y tratarla como un valor, logrando un efecto similar al de los punteros a funciones en C, pero con una sintaxis más clara y un mejor soporte por parte del lenguaje.
 
 
+**Anotación:**
+* No tiene nombre.
+
 
 ## 3. ¿Qué es el **paradigma funcional**? ¿Por qué a algunos lenguajes orientados a objetos como Java 8, se les llama multi-paradigma? ¿Qué quiere decir que las funciones son "ciudadanos de primera clase"?
 
